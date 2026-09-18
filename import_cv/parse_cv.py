@@ -12,6 +12,9 @@ Requires:
     pip install anthropic
 
 \PaperEntry argument order: {authors}{title}{venue}{location}{year}{link}
+
+NOTE: author names must always be copied verbatim from cv.tex — never retyped
+or guessed from memory. See CLAUDE.md at the repo root for the full rule.
 """
 
 import re
