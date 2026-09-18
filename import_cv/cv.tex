@@ -1,0 +1,1099 @@
+% TODO THIS DOC:
+% put reviewing for conferences and journals
+% if this sucks you can comment it out and release when you’ve done more
+% teaching
+% include the number of students (a range like 50-100)
+% bulleted descriptions
+
+
+\documentclass[paper=letter,fontsize=11pt]{scrartcl} % KOMA-article class
+							
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{amsmath,amsfonts,amsthm}     % Math packages
+\usepackage{graphicx}                    % Enable pdflatex
+\usepackage[svgnames]{xcolor}            % Colors by their 'svgnames'
+\usepackage{geometry}
+	%\textheight=700px                    % Saving trees ;-)
+%\usepackage{url}
+\usepackage[colorlinks=true,
+linkcolor=blue,
+urlcolor=blue]{hyperref}
+\usepackage{float}
+\usepackage{etaremune}
+\usepackage{wrapfig}
+\usepackage{attachfile}
+\usepackage{multicol}
+
+% my added packages
+% \usepackage{bibentry}
+% \bibliography*
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+\frenchspacing              % Better looking spacings after periods
+\pagestyle{empty}           % No pagenumbers/headers/footers
+
+%\addtolength{\voffset}{-40pt}
+%\addtolength{\textheight}{20pt}
+
+\setlength\topmargin{0pt}
+\addtolength\topmargin{-\headheight}
+\addtolength\topmargin{-\headsep}
+\setlength\oddsidemargin{0pt}
+\setlength\textwidth{\paperwidth}
+\addtolength\textwidth{-2in}
+\setlength\textheight{\paperheight}
+%\addtolength\textheight{-3in}
+\addtolength\textheight{-2in}
+\usepackage{layout}
+
+%%% Custom sectioning}{sectsty package)
+%%% ------------------------------------------------------------
+\usepackage{sectsty}
+
+\sectionfont{%			            % Change font of \section command
+	\usefont{OT1}{phv}{b}{n}%		% bch-b-n: CharterBT-Bold font
+	\sectionrule{0pt}{0pt}{-5pt}{3pt}}
+
+%%% Macros
+%%% ------------------------------------------------------------
+\newlength{\spacebox}
+\settowidth{\spacebox}{8888888888}			% Box to align text
+\newcommand{\sepspace}{\vspace*{1em}}		% Vertical space macro
+
+\newcommand{\MyName}[1]{ % Name
+		\Huge \usefont{OT1}{phv}{b}{n} \hfill #1
+		\par \normalsize \normalfont}
+		
+\newcommand{\MySlogan}[1]{ % Slogan}{optional)
+		\large \usefont{OT1}{phv}{m}{n}\hfill \textit{#1}
+		\par \normalsize \normalfont}
+
+\newcommand{\NewPart}[2]{\section*{\uppercase{#1} #2}}
+
+\newcommand{\PersonalEntry}[2]{
+		\noindent\hangindent=2em\hangafter=0 % Indentation
+		\parbox{\spacebox}{        % Box to align text
+		\textit{#1}}		       % Entry name}{birth, address, etc.)
+		\hspace{1.5em} #2 \par}    % Entry value
+
+\newcommand{\SkillsEntry}[2]{      % Same as \PersonalEntry
+		\noindent\hangindent=2em\hangafter=0 % Indentation
+		\parbox{\spacebox}{        % Box to align text
+		\textit{#1}}			   % Entry name}{birth, address, etc.)
+		\hspace{1.5em} #2 \par}    % Entry value	
+		
+\newcommand{\EducationEntry}[3]{
+		\noindent \textbf{#1} \hfill      % Study
+		\colorbox{White}{%
+			\parbox{10em}{%
+			\hfill\color{Black}#2}} \par  % Duration
+		\noindent \textit{#3} \par}
+		
+\newcommand{\ResearchEntry}[5]{
+		\noindent \textbf{#1} \hfill      % Study
+		\colorbox{White}{%
+			\parbox{10em}{%
+			\hfill\color{Black}#2}} \par  % Duration
+		\noindent \textit{#3} \hfill      % Position
+		\colorbox{White}{%
+			\parbox{6em}{%
+			\hfill\color{Black}#4}} \par  % Location
+		\noindent\hangindent=2em\hangafter=0 \small #5 % Description
+		\normalsize \sepspace}
+
+
+\newcommand{\ProfEntry}[5]{
+		\noindent \textbf{#1} \hfill      % Study
+		\colorbox{White}{%
+			\parbox{10em}{%
+			\hfill\color{Black}#2}} \par  % Duration
+		\noindent #3 \hfill      % Position
+		\colorbox{White}{%
+			\parbox{6em}{%
+			\hfill\color{Black}#4}} \par  % Location
+		\noindent #5 % Description
+		\normalsize \sepspace}
+
+% \newcommand{\ProfEntry}[3]{
+% 		\noindent \textbf{#1} \hfill      % Study
+% 		\colorbox{White}{%
+% 			\parbox{6em}{%
+% 			\hfill\color{Black}#2}} \par  % Location
+% 		\noindent\hangindent=2em\hangafter=0 \small #3 % Description
+% 		\normalsize \par}
+		
+\newcommand{\ServiceEntry}[4]{
+		\noindent \textbf{#1} \hfill      % Study
+		\colorbox{White}{%
+			\parbox{10em}{%
+			\hfill\color{Black}#2}} \par  % Duration
+		\noindent \textit{#3} \par  % Location
+		\noindent\hangindent=2em\hangafter=0 \small #4 % Description
+		\normalsize \par}
+
+\newcommand{\WorkEntry}[4]{				  % Same as \EducationEntry
+		\noindent \textbf{#1} \hfill      % Jobname
+		\colorbox{White}{\color{White}#2} \par  % Duration
+		\noindent \textit{#3} \par              % Company
+		\noindent\hangindent=2em\hangafter=0 \small #4 % Description
+		\normalsize \par}
+        
+\newcommand{\OpenSourceEntry}[3]{				  % Same as \EducationEntry
+		\noindent \textbf{#1}  \par    % Jobname
+		\noindent \url{#2} \par            % Company
+		\noindent #3 \par % Description
+        }
+
+\newcommand{\PaperEntry}[6]{
+		\noindent #1, ``\href{#6}{#2}", \textit{#3}, #4 (#5).}
+
+\newcommand{\ArxivEntry}[3]{
+		\noindent #1, ``\href{http://arxiv.org/abs/#3}{#2}", \textit{{cond-mat/}#3}.}
+        
+\newcommand{\BookEntry}[4]{
+		\noindent #1, ``\href{#3}{#4}", \textit{#3}.}
+        
+\newcommand{\FundingEntry}[5]{
+        \noindent #1, ``#2", \$#3 (#4, #5).}
+
+\newcommand{\TalkEntry}[4]{
+		\noindent \href{#4}{#1}, #2, #3 }
+
+\newcommand{\CommitteeEntry}[4]{
+		\noindent \href{#4}{#1} (#2): #3}
+
+\newcommand{\ThesisEntry}[5]{
+		\noindent #1 -- #2 #3 ``#4" \textit{#5}}
+		
+\newcommand{\CourseEntry}[4]{
+		\noindent \textbf{#1} \par
+		\noindent \textit{#3} \hfill      % Study
+		\colorbox{White}{%
+			\parbox{6em}{%
+			\hfill\color{Black}#2}} \par  % Duration
+		\noindent\hangindent=2em\hangafter=0 \small #4 % Description
+		\normalsize \par}
+
+\newcommand{\PressEntry}[5]{
+		\noindent \textbf{#5}. #1 (#2). \textit{#3} Retrieved from: \url{#4}}
+
+%%% Begin Document
+%%% ------------------------------------------------------------
+\begin{document}
+
+%\layout
+
+% you can upload a photo and include it here...
+%\begin{wrapfigure}{l}{0.5\textwidth}
+%	\vspace*{-2em}
+%		\includegraphics[width=0.2\textwidth]{Appelbaum.JPG}
+%\end{wrapfigure}
+
+\MyName{Natasha Jaques}
+\MySlogan{\vspace{-0.1in}
+\begin{flushright}
+\href{natashajaques.ai}{natashajaques.ai} \\
+2132 NW 99th Street\\
+Seattle, WA 98117 \\
+(425) 463-9162\\
+% \href{mailto:natashamjaques@gmail.com}{natashamjaques@gmail.com}\\
+\href{mailto:nj@cs.washington.edu}{nj@cs.washington.edu} \\ \href{mailto:natashajaques@google.com}{natashajaques@google.com}\\
+\end{flushright}}
+
+%\sepspace
+%\NewPart{Overview}{}
+% Professor of Physics, APS Fellow, Condensed Matter Experiment {\em and} Theory.
+%%% Personal details
+%%% ------------------------------------------------------------
+% \NewPart{}{}
+
+% \PersonalEntry{Address}{\href{http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=205373386241137011999.000494c753d05031c4fe4}{Physical Sciences Complex}, University of Maryland, College Park}
+% \PersonalEntry{Phone}{(301) 337-7461}
+% \PersonalEntry{Mail}{\href{mailto:appelbaum@physics.umd.edu}{appelbaum@physics.umd.edu}}
+% \PersonalEntry{WWW}{\href{http://appelbaumlab.umd.edu/CV.html}{http://appelbaum.physics.umd.edu}}
+
+%%% Education
+%%% ------------------------------------------------------------
+
+%%% Work experience
+%%% ------------------------------------------------------------
+\NewPart{Current Roles}{}
+\ProfEntry{University of Washington, Assistant Professor}{Seattle, USA}{Principal Investigator of the Social Reinforcement Learning lab. Full time role.}{2024-present}
+{
+\noindent
+\url{https://socialrl.cs.washington.edu/}
+}
+
+\ProfEntry{Google DeepMind, Staff Research Scientist}{Seattle, USA}{Part-time, 20\% role.}{2019-present}{}
+
+%Manager: Joel Leibo
+% {\begin{itemize}
+%     \item Social learning helps humans and animals rapidly adapt to new circumstances, coordinate with others, and drives the emergence of complex learned behaviors. My research focuses on \textbf{Social Reinforcement Learning}, developing algorithms that combine insights from social learning and multi-agent training to improve AI agents’ learning, generalization, coordination, and human-AI interaction. 
+%     \item This includes developing better techniques for \textbf{Reinforcement Learning from Human Feedback (RLHF)}, to ensure AI systems such as large language models are aligned to diverse human values across a range of contexts.
+%     \item Improving the ability to AI agents to \textbf{cooperate with humans} through improved modeling of human goals and preferences, and better \textbf{zero-shot coordination}.
+%     \item Using \textbf{multi-agent reinforcement learning} as a tool both to understand human social interactions, and to provide improved technical solutions to problems ranging from sustainability, to chip design, to satellite assignment.
+% \end{itemize}}
+
+
+
+\NewPart{Education}{}
+
+\EducationEntry{Ph.D. Media Arts and Sciences}{2014-2019} 
+            {Massachusetts Institute of Technology}% , GPA: 5.0 {\href{http://dspace.mit.edu/handle/1721.1/29612}{``Ballistic Electrons: Microscopy, Spectroscopy, Devices and Luminescence"}\\
+%Thesis advisor: V. Narayanamurti (Harvard) / J.D. Joannopoulos (MIT)}
+\smallskip
+
+\EducationEntry{M.Sc. Computer Science}{2012-2014}{University of British Columbia}%  GPA: 94.7\%{Summa Cum Laude. Academic/Research advisors: X.-C. Zhang and P.D. Persans}
+\smallskip
+
+\EducationEntry{B.Sc. Computer Science}{2007-2012}{University of Regina} % GPA: 92.8\%
+\smallskip
+
+\EducationEntry{B.A. Psychology}{2007-2012}{University of Regina} %  GPA: 92.0\%
+
+\NewPart{Awards}{}
+
+\noindent \textbf{Merit awards:}
+\begin{itemize}
+\item 2025 Schmidt Sciences Early Career Fellow %https://ai2050.schmidtsciences.org/fellows/ 
+\item 2024 JP Morgan Chase Faculty Research Award %https://aaac.world/aaac-outstanding-phd-dissertation-award-2020/
+\item 2021 Outstanding PhD Dissertation Award from the Association for the Advancement of Affective Computing (AAAC) %https://aaac.world/aaac-outstanding-phd-dissertation-award-2020/
+\item 2019 Rising Stars in EECS Pitch Competition Winner, Computer Science
+\item 2017 Campion College Centennial Alumni of Distinction Award
+\item 2012 S.E. Stewart Award for the highest GPA in an Arts degree
+\end{itemize}
+
+\noindent \textbf{Paper awards:}
+\begin{itemize}
+\item 2025 Finalist for Best Paper on Robot Learning at the International Conference on Robotics and Automation (ICRA), for \href{https://arxiv.org/abs/2408.03906}{Achieving Human Level Competitive Robot Table Tennis}
+\item 2025 Best Paper at the NeurIPS Language, Agents, and World Models
+%https://sites.google.com/view/law-2025
+workshop, for \href{https://arxiv.org/abs/2510.01272}{Modeling Others' Minds as Code}
+\item 2025 \href{https://www.madrona.com/madrona-prize-2025-celebrating-innovation-allen-school-research-showcase/}{Madrona Prize} for \href{https://arxiv.org/abs/2504.03206}{Enhancing Personalized Multi-Turn Dialogue with Curiosity Reward}
+\item 2025 Outstanding Paper at the COLM workshop on AI Agents: Capabilities and Safety (AIA) Workshop, for \href{https://arxiv.org/abs/2506.07468}{Chasing Moving Targets with Online Self-Play Reinforcement Learning for Safer Language Models}
+\item 2024 Best Paper runner up at the NeurIPS Pluralistic Alignment workshop, for \href{https://arxiv.org/abs/2408.10075}{Personalizing Reinforcement Learning from Human Feedback with Variational Preference Learning}
+\item 2023 Best Paper at the AAAI Representation Learning for Responsible Human-Centric AI workshop, for \href{https://arxiv.org/abs/2310.15337}{Moral Foundations of Large Language Models}
+\item 2021 Best of IEEE Transactions on Affective Computing Paper Collection for \href{https://pmc.ncbi.nlm.nih.gov/articles/PMC7266106/}{Personalized Multitask Learning for Predicting Tomorrow's Mood, Stress, and Health}% https://www.acii-conf.net/2021/wp-content/uploads/2021/09/ACII2021_booklet_v3.pdf 
+\item 2020 Best Paper at the NeurIPS Cooperative AI workshop, for \href{https://arxiv.org/abs/2010.00581}{Emergent Social Learning via Multi-agent Reinforcement Learning}
+\item 2019 Best Paper Honourable Mention at the International Conference on Machine Learning (ICML), for \href{https://arxiv.org/abs/1810.08647}{Social Influence as Intrinsic Motivation for Multi-Agent Deep Reinforcement Learning}
+\item 2019 Best Paper Nominee at the NeurIPS Conversational AI workshop, for \href{https://arxiv.org/abs/1909.07547}{Hierarchical Reinforcement Learning for Open-Domain Dialog}
+\item 2016 Best Demo at Neural Information Processing Systems (NeurIPS), for \href{https://neurips.cc/virtual/2016/demonstration/6307}{Interactive musical improvisation with Magenta}
+\item 2016 Best Paper at the NeurIPS Machine Learning for Healthcare Workshop, for \href{https://www.semanticscholar.org/paper/Multi-task-Learning-for-Predicting-Health-%2C-Stress-Jaques-Taylor/b2287a406985980515d5cc63e9b37fb17c5186f8?p2df}{Multi-task Learning for Predicting Health, Stress, and Happiness}
+\end{itemize}
+
+\noindent \textbf{Grants:}
+\begin{itemize}
+\item 2025 Toyota Research Institute (TRI), ``Kaizen Thought Partners: Pluralistic AI that Empowers and Adapts to People'', \$900,000. Lead PI. Co-PIs: Max Kleiman-Weiner.
+
+\item 2025 Open Philanthropy Technical AI Safety, ``LLM Safety Guarantees through Online Adversarial Reinforcement Learning'', \$268,000. Lead PI. Co-PIs: Tim Althoff.
+
+\item 2025 DoorDash, ``Experiments to improve DoorDash's business performance through RL'', \$33,000. Lead PI.
+
+\item 2025 Character.AI, ``Social Reinforcement Learning'', \$100,000. Lead PI.
+
+\item 2025 Thinking Machines Lab Tinker Research Grant, ``Adaptive Environment Self-Play'', \$5,000. Lead PI.
+
+\item 2025 Thinking Machines Lab Tinker Educational Grant for computing needs for Social Reinforcement Learning course. \$5,000. Lead PI.
+
+\item 2025 UW Tsukuba NVIDIA Amazon Cross-Pacific AI Initiative, “Inferring Strategic Behavior to Ensure Trustworthy Multi-agent AI Systems”, \$720,000. Lead PI. Co PIs: Lillian Ratliff, Max Kleiman-Weiner, Simon Du, Kevin Jamieson.% 
+\item 2025 Sony Research Award, “Coordinating Human-AI Cooperation in Virtual Environments”, \$150,000. Co-PIs: Max Kleiman-Weiner. % 
+\item 2025 Microsoft Azure Accelerating Foundation Models Research Initiative, “Enabling Large Language Model Personalization through Enhanced User Modeling”, \$50,000.
+\item 2024 Amazon Middle Mile Product Tech Gift Research Award, “Deep Multi-agent Reinforcement Learning for the Middle Mile”, \$100,000. % 
+\item 2024 Amazon Science Gift Hub, “Adversarial Object Generation for Robust Manipulation”, \$100,000. % 
+\item 2023 Cooperative AI Foundation, “Cooperation and Negotiation in Large Language Models”, \$450,000. Co-PIs: Sergey Levine.% 
+\item 2021 \href{}{C3.ai Digital Transformation Institute AI for Energy and Climate Security Awards}, \href{}{“Offline Reinforcement Learning for Energy-Efficient Power Grids”}, \$210,000. PI: Sergey Levine. % https://c3dti.ai/c3-announces-energy-climate-awards/ https://c3.ai/dti/research/2021-projects/
+\end{itemize}
+
+\noindent \textbf{Scholarships:}
+\begin{itemize}
+\item 2014 NSERC Doctoral Postgraduate Fellowship
+\item 2014 Robert Wood Johnson Foundation Wellbeing Fellowship
+\item 2013 Microsoft Research Graduate Women's Scholarship
+\item 2013 UBC Affiliated Fellowships Scholarship
+\item 2012 UBC CS Merit Scholarship
+\item 2012 NSERC Canadian Graduate Scholarship
+\item 2012 ISM Canada IT Futures Scholarship
+\item 2011 Shell Canada Scholarship in Computer Science
+\item 2011 Faculty of Science Supplemental Instruction Scholar Award
+\item 2010 John \& Jack Spencer Gordon Middleton Scholarship
+\item 2007-2012 Academic Gold Scholarship
+\end{itemize}
+
+
+\NewPart{Past Research and Work Experience}{}
+
+\ResearchEntry{Google Brain, Senior Research Scientist}{Mountain View, USA}{Managers: Douglas Eck, Aleksandra Faust}{2020-2023}%
+
+\ResearchEntry{UC Berkeley, Postdoctoral Visiting Scholar}{Berkeley, USA}{Advisor: Sergey Levine}{2020-2022}%
+% {\begin{itemize}
+%     \item I focused on studying whether \textbf{Social Reinforcement Learning} could improve AI agents' learning, generalization, and human-AI interaction. 
+%     \item This included developing \textbf{multi-agent curriculum generation} techniques, in which an adversary learns to generate a series of training environments to minimize the regret of a learner. This improved learning and generalization, enabling agents to solve problems that would not otherwise be possible when learning alone.
+%     \item Demonstrated that \textbf{social learning} from self-interested agents within an environment can enhance generalization to novel tasks, and developed improved algorithms for social learning.
+% \end{itemize}}
+% \sepspace
+
+\ResearchEntry{MIT Media Lab, PhD Candidate}{Boston, USA}{Advisor: Rosalind Picard}{2014-2019}
+% {\begin{itemize}
+%     \item My PhD focused on both advancing \textbf{Affective Computing} (AC) through the development of sophisticated machine learning methods tailored to AC problems, and improving \textbf{machine learning} via enhanced \textbf{social and emotional} intelligence. 
+%     \item Focused on improving the generalization of machine learning models, via multi-task learning, \textbf{intrinsic motivation, transfer learning, and learning from human preferences.}
+%     \item Demonstrated that using \textbf{multi-task learning to personalize} machine learning models to suit an individual can improve the accuracy in predicting mood, health, and stress by $\sim20$\%, leading to state-of-the-art performance on this task.
+%     \item Focused on a range of \textbf{Affective Computing} projects; e.g. automatically filling in missing sensor data in multimodal inputs, predicting mood, stress, health, sleep, and bonding in conversations, and detecting artifacts in physiological signals.
+% \end{itemize}}
+% \sepspace
+
+\ResearchEntry{DeepMind, Research Scientist Intern}{London, UK}{Advisor: Nando de Freitas}{2018}
+% {\begin{itemize}
+%     \item Developed a unified mechanism for improving \textbf{coordination} and \textbf{communication} in multi-agent reinforcement learning (MARL) using an intrinsic social motivation to promote \textbf{causal influence} between agents.
+%     \item Demonstrated that this led to agents spontaneously developing \textbf{emergent communication}, and could be used to learn more meaningful explicit communication protocols. 
+%     \item Showed that influence can be computed in a \textbf{fully decentralized} manner using each agent's internal model of other agents, without requiring a centralized controller or access to another agent's rewards.
+% \end{itemize}}
+% \sepspace
+
+\ResearchEntry{Google Brain, Research Scientist Intern}{San Francisco, USA}{Advisor: Douglas Eck}{2016, 2017}
+% {\begin{itemize}
+%     \item Demonstrated the \textbf{first example} of improving the output of a deep learning model through automatic detection of human \textbf{facial expression} reactions to its output.
+%     \item \textbf{Led a team of five} in conducting \textbf{HCI} research and building a platform to collect people's facial expression responses to samples from the model. 
+%     \item Used a combinative of \textbf{generative models (VAE and GAN)} to improve the outputs of Sketch RNN according to facial expression response data. 
+% \end{itemize}}
+% \sepspace
+
+% \ResearchEntry{Google Brain, Research Scientist Intern}{San Francisco, USA}{Douglas Eck}{2016}
+% {\begin{itemize}
+%     \item Developed a novel technique for training recurrent neural networks both on data and using reinforcement learning (RL), by treating the model trained on data as a prior policy and penalizing deviation from this prior using \textbf{KL-Control}.
+%     \item Provided empirical results showing the technique is able to reduce \textbf{catastrophic forgetting} when doing \textbf{transfer learning} from maximum likelihood to RL. 
+%     \item Demonstrated the effectiveness of the approach for both \textbf{music generation} and \textbf{drug discovery}.
+% \end{itemize}}
+% \sepspace
+
+\ResearchEntry{Microsoft, Program Manager Intern}{Redmond, USA}{Manager: Brian Jack}{2014}
+% {\begin{itemize}
+%     \item Researched how to handle the transition from IPv4 to IPv6 for the \textbf{Networking} team in \textbf{Azure}.
+%     \item Designed the \textbf{implementation} and initiated writing code to support the transition.
+% \end{itemize}}
+% \sepspace
+
+\ResearchEntry{University of British Columbia, Masters Student}{Vancouver, Canada}{Advisor: Cristina Conati}{2012-2014}
+% {\begin{itemize}
+%     \item Developed machine learning methods for detecting when a student using an \textbf{Intelligent Tutoring System} (ITS) was bored, based on their eye tracking and skin conductance data.
+%     \item Studied methods for optimizing \textbf{POMDPs} to create an emotionally adaptive ITS. 
+%     \item Compared the performance of deep neural networks and random forests for \textbf{automatically recognizing sign language} symbols from Microsoft Kinect data. 
+% \end{itemize}}
+% \sepspace
+
+\ResearchEntry{University of Regina, Honours Undergraduate Student}{Regina, Canada}{Advisors: David Gerhard, Howard Hamilton}{2007-2012}
+% {\begin{itemize}
+%     \item Compared the effectiveness of \textbf{genetic algorithms} vs. reinforcement learning for solving a simulated maze navigation task. 
+%     \item Developed a series of \textbf{gesture recognition} methods for use with the Microsoft Kinect, in order to create a gesture-based \textbf{musical instrument} interface.
+%     \item Created an algorithm to \textbf{automatically recognize swimming strokes} in accelerometer data obtained from waterproof devices worn by swimmers.
+% \end{itemize}}
+
+%%% Talks
+%%% ------------------------------------------------------------
+\NewPart{Invited Talks and Panels}{}
+\begin{etaremune}
+
+\item \TalkEntry{ICLR Workshop on Multi-Agent Learning and Generative AI}{Rio de Janeiro, Brazil}{April 2026}{https://iclr26-mal-gai.github.io/}
+
+\item \TalkEntry{ICLR Workshop on Lifelong Learning}{Rio de Janeiro, Brazil}{April 2026}{https://lifelongagent.github.io/}
+
+\item \TalkEntry{Amazon PhD Fellows Summit}{Seattle, USA}{April 2026}{}
+
+\item \TalkEntry{IMSI Frontiers in Online Reinforcement Learning workshop}{Chicago, USA}{March 2026}{https://www.imsi.institute/activities/theoretical-advances-in-reinforcement-learning-and-control/frontiers-in-online-reinforcement-learning/}
+
+\item \TalkEntry{UW CSE Admitted Students Day}{University of Washington}{March 2026}{}
+
+\item \TalkEntry{NeurIPS Multi-Turn Interactions in LLMs workshop}{Virtual}{December 2025}{https://workshop-multi-turn-interaction.github.io/}
+
+\item \TalkEntry{UW+Amazon Science Hub keynote}{University of Washington}{October 2025}{}
+
+\item \TalkEntry{Google DeepMind Montreal}{Montreal, Canada}{September 2025}{}
+
+\item \TalkEntry{RLC CoCoMARL -- Coordination and Cooperation for Reinforcement Learning Methods workshop}{Virtual}{August 2025}{https://sites.google.com/view/cocomarl2025/}
+
+\item \TalkEntry{RLC Inductive Biases in Reinforcement Learning workshop}{Virtual}{August 2025}{https://sites.google.com/view/ibrl-workshop/speakers}
+
+\item \TalkEntry{Montreal IVADO Thematic Semester on Autonomous LLM Agents}{Montreal, Canada}{August 2025}{https://ivado.ca/en/thematic-programs/autonomous-llm-agents-risks-and-scientific-challenges/}
+
+\item \TalkEntry{ICML Multi-Agent Systems in the Era of Foundation Models workshop}{Vienna, Austria}{July 2025}{https://mas-2025.github.io/MAS-2025/}
+
+\item \TalkEntry{ICML Exploration in AI Today workshop}{Vienna, Austria}{July 2025}{https://exait-workshop.github.io/}
+
+\item \TalkEntry{ICML Models of Human Feedback for AI Alignment workshop}{Vienna, Austria}{July 2025}{https://sites.google.com/view/mhf-icml2025}
+
+\item \TalkEntry{Cross Future Hub AI Summit (interview)}{Virtual}{July 2025}{https://www.cross-future.com/?wix-vod-video-id=a13f266fc86541dfa290ef3113c6cb58&wix-vod-comp-id=comp-m7ck5olv}
+
+\item \TalkEntry{UW CSE Alumni event}{University of Washington}{June 2025}{}
+
+\item \TalkEntry{Industry Academia Partnership AI in the Cloud workshop}{University of Washington}{May 2025}{https://www.industry-academia.org/uw-2025.html}
+
+\item \TalkEntry{UW CSE Admitted Freshman Visit Day}{University of Washington}{April 2025}{https://www.youtube.com/watch?v=KvTGUI4Tznw}
+\item \TalkEntry{ICLR Reasoning and Planning Workshop}{Virtual}{April 2025}{https://workshop-llm-reasoning-planning.github.io/}
+\item\TalkEntry{WomXn at the Forefront of Engineering Research (WAFER)}{University of Washington}{April 2025}{https://www.ece.uw.edu/news-events/wafer/}
+\item\TalkEntry{UCLA NLP Seminar Series}{Virtual}{February 2025}{}
+\item\TalkEntry{Microsoft Research Asia ACE Talk Series}{Virtual}{January 2025}{}
+\item\TalkEntry{NSF Reinforcement Learning Workshop%panel on RL and Control in the GenAI Era
+}{Cambridge, Massachusetts}{January 2025}{https://sites.harvard.edu/nsf-rl-workshop/schedule/}
+\item\TalkEntry{Stanford Intelligent Systems Laboratory (SISL)}{Virtual}{January 2025}{}
+\item\TalkEntry{NeurIPS ML for Systems Workshop}{Vancouver, Canada}{December 2024}{https://neurips.cc/virtual/2024/workshop/84699}
+\item\TalkEntry{NeurIPS Open World Agents Workshop}{Vancouver, Canada}{December 2024}{https://sites.google.com/view/open-world-agents/schedule?authuser=0}
+\item\TalkEntry{Reinforcement Learning Conference (RLC) Safety Workshop}{Virtual}{June 2024}{https://rlsafetyworkshop.github.io/}
+\item\TalkEntry{National Security Institute Cyber and Tech Center's "Unleashing Innovation: Navigating Game Changing Technologies" podcast, Generative AI episode}{Virtual}{June 2024}{https://www.youtube.com/watch?v=Kv9BjGKWx2E&list=PL46I6ct71LWPe_CvHvED3Qnv9Jh-2g2Zb&index=2}
+\item\TalkEntry{Barcelona AI Safety Research Group}{Virtual}{May 2024}{https://www.youtube.com/watch?v=8noPGzogpk4}
+\item\TalkEntry{AI Tea Talk Singapore}{Virtual}{April 2024}{https://www.youtube.com/watch?v=VOgrYxFe-r0 }
+\item\TalkEntry{NeurIPS Melting Pot Contest Panel}{Virtual}{December 2023}{https://nips.cc/virtual/2023/83652}
+\item\TalkEntry{Cooperative AI Foundation Retreat}{Virtual}{July 2023}{https://www.youtube.com/watch?v=56PlUikhB3o&list=PL4gbzAVOpp7AN4mYx7-KQN-T1Zv82uNu-&index=3&t=403s}
+\item\TalkEntry{NeurIPS Deep RL Workshop Opinion talk}{Virtual}{December 2022}{https://neurips.cc/virtual/2022/63884}
+\item\TalkEntry{NeurIPS Deep RL Workshop Panel}{Virtual}{December 2022}{https://neurips.cc/virtual/2022/66219}
+\item\TalkEntry{Google Discoveries and Mysteries}{Mountain View, USA}{October 2022}{}
+\item\TalkEntry{Absolutely Interdisciplinary}{Virtual}{June 2022}{https://absolutelyinterdisciplinary.com/speakers-2022}
+\item\TalkEntry{AI4Good Lab}{Virtual}{June 2022}{https://www.ai4goodlab.com/}
+\item\TalkEntry{Social Alignment in Humans and Machines workshop at RLDM}{Virtual}{June 2022}{https://sites.google.com/corp/mila.quebec/soc-rldm/home}
+\item\TalkEntry{Artificial Social Intelligence workshop at CVPR}{Virtual}{June 2022}{https://sites.google.com/corp/berkeley.edu/artificial-social-intelligence}
+\item\TalkEntry{Adaptive Learning Agents workshop at AAMAS}{Virtual}{May 2022}{https://youtu.be/0fyCDafLrfU?t=5301}
+\item\TalkEntry{Emergent Communication: New Frontiers workshop at ICLR}{Virtual}{April 2022}{https://sites.google.com/corp/view/emecom2022}
+\item\TalkEntry{Agent Learning in Open-Endedness workshop at ICLR}{Virtual}{April 2022}{https://sites.google.com/corp/view/aloe2022/schedule}
+\item\TalkEntry{EmTech Digital, MIT Technology Review's AI Conference}{Cambridge, USA}{March 2022}{https://event.technologyreview.com/emtech-digital-2022/speakers}
+\item\TalkEntry{Human-Centric Self-Supervised Learning workshop at AAAI}{Virtual}{March 2022}{https://hcssl.github.io/AAAI-22/pages/speakers.html}
+\item\TalkEntry{UCLA Institute for Pure and Applied Mathematics (IPAM) Mathematics of Intelligence workshop}{Virtual}{February 2022}{https://www.youtube.com/watch?v=rjLT0NkCp9I}
+\item\TalkEntry{Stanford Intelligent Systems Lab}{Virtual}{January 2022}{}
+\item\TalkEntry{NeurIPS Political Economy of Reinforcement Learning (PERLS) workshop (Panelist)}{Virtual}{December 2021}{https://neurips.cc/virtual/2021/workshop/21864}
+\item\TalkEntry{UC Berkeley Artificial Intelligence Research Lab BAIR/CPAR/BDD Seminar}{Virtual}{November 2021}{}
+\item\TalkEntry{UC Berkeley CS285 Deep Reinforcement Learning}{Virtual}{December 2021}{}
+\item\TalkEntry{Tsinghua University Introduction to Artificial Intelligence}{Virtual}{November 2021}{}
+\item\TalkEntry{Tutorial at the Conference on Robot Learning (CoRL)}{Virtual}{November 2021}{https://youtu.be/5KjpZS4_RBs?t=27626}
+\item\TalkEntry{Novel Ideas in Learning to Learning through Interaction (NILLI) workshop at EMNLP}{Virtual}{November 2021}{https://www.cs.mcgill.ca/~pparth2/nilli_workshop/}
+\item\TalkEntry{Intel Deep Learning Community of Practice}{Virtual}{October 2021}{https://youtu.be/TggAeE1wjVI}
+\item\TalkEntry{ML@Berkeley}{Virtual}{October 2021}{}
+\item\TalkEntry{Cultivator Saskatchewan Startup Summit (Panelist)}{Virtual}{September 2021}{}
+\item\TalkEntry{Montreal Institute of Learning Algorithms (MILA) RL Sofa}{Virtual}{July 2021}{https://bluejeans.com/s/mw4d0UxFM_J/}
+\item\TalkEntry{University of Regina Department of Computer Science Alumni and Friends Lecture Series}{Virtual}{June 2021}{https://www.uregina.ca/science/cs/events/2021/06/social-reinforcement-learning-vl.html}
+\item\TalkEntry{Berkeley Center for Human-Compatible Artificial Intelligence (CHAI) Workshop}{Virtual}{June 2021}{}
+\item\TalkEntry{McGill University AI4Good Lab}{Virtual}{May 2021}{https://www.ai4goodlab.com/montreal-program}
+\item\TalkEntry{ICLR Social AI Virtual Gathering}{Virtual}{May 2021}{https://iclr.cc/virtual/2021/social/4423}
+\item\TalkEntry{Jay Shah Machine Learning Podcast}{Virtual}{March 2021}{https://www.youtube.com/watch?v=8XpCnmvq49s}
+\item\TalkEntry{Re-Work Women In AI Podcast}{Virtual}{March 2021}{https://www.youtube.com/watch?v=_gLU5Uw4TWU}
+\item\TalkEntry{Berkeley Center for Human-Compatible Artificial Intelligence (CHAI) Seminar}{Virtual}{February 2021}{}
+\item\TalkEntry{Oxford Department of Computer Science Seminar}{Virtual}{February 2021}{http://www.cs.ox.ac.uk/seminars/2371.html}
+\item\TalkEntry{Re-Work Deep Learning 2.0 Summit}{Virtual}{January 2021}{https://www.re-work.co/events/reinforcement-learning-summit}%https://www.re-work.co/events/reinforcement-learning-summit
+\item\TalkEntry{Institute of Cognitive Science, University of Osnabrück Deep Reinforcement Learning Workshop}{Virtual}{January 2021}{https://www.youtube.com/watch?list=PLlVUF9l2EowbdI05VOaMp73p-TtZjQW7A&v=G__GZKNhvsU&feature=emb_logo}
+\item\TalkEntry{NeurIPS Cooperative AI Workshop (Panelist)}{Virtual}{December 2020}{https://www.cooperativeai.com/neurips-2020/speakers}
+\item\TalkEntry{University College London Deciding, Acting, and Reasoning with Knowledge (DARK) Seminar}{Virtual}{December 2020}{https://www.youtube.com/watch?v=traKBhJm4lQ&feature=youtu.be}
+\item\TalkEntry{Google Apprenticeship Learning Summit}{Virtual}{December 2020}{https://sites.google.com/corp/google.com/alsummit2020}
+\item\TalkEntry{Microsoft Research New York}{Virtual}{November 2020}{}
+\item\TalkEntry{Microsoft AI Breakthroughs Workshop}{Virtual}{September 2020}{https://www.microsoft.com/en-us/research/event/ai-breakthroughs-2020/#!agenda}
+\item\TalkEntry{DeepMind Seminar}{Virtual}{August 2020}{}
+\item\TalkEntry{Google Synthetic Characters Conference}{Virtual}{August 2020}{https://sites.google.com/corp/google.com/sc2020/schedule-agenda?authuser=0} 
+\item\TalkEntry{Brain RL Seminar}{Virtual}{August 2020}{} 
+\item\TalkEntry{Samsung Forum}{Virtual}{April 2020}{https://www.samsung.com/us/ssic/session/towards-social-and-affective-machine-learning/} 
+\item\TalkEntry{AAAI workshop on Affective Content Analysis (\textbf{Keynote})}{New York, USA}{February 2020}{https://sites.google.com/corp/view/affcon2020/invited-speakers} 
+\item\TalkEntry{Berkeley Center for Human-compatible AI (CHAI) seminar}{Berkeley, USA}{November 2019}{} 
+\item\TalkEntry{IBM K-12 Education Conference}{Cambridge, USA}{October 2019}{} 
+\item\TalkEntry{ICML workshop on Imitation, Intent, and Interaction}{Cambridge, USA}{June 2019}{https://slideslive.com/38917621/social-learning-from-agents-and-humans} 
+\item\TalkEntry{Broad Institute}{Cambridge, USA}{February 2019}{https://www.youtube.com/watch?v=Vx5Daxa0Yts} 
+\item\TalkEntry{Schlumberger-Doll Research Center}{Cambridge, USA}{December 2018}{} 
+\item\TalkEntry{Google AI}{Montreal, Canada}{December 2018}{} 
+\item\TalkEntry{New York University}{New York, USA}{November 2018}{} 
+\item\TalkEntry{Starsconf \textbf{(Keynote)}}{Santiago, Chile}{November 2018}{https://www.youtube.com/watch?v=QI5Gvn8FDG0} 
+
+\item\TalkEntry{Creative AI Meetup}{London, UK}{September 2018}{https://interests.me/org/communitytechevents/story/94296} %{Learning via Social Awareness: Improving a Deep Generative Sketching Model with Facial expression Feedback}
+
+\item\TalkEntry{Department of Computer Science Image and Video Computing Seminar Series, 
+Boston University}{Boston, USA}{March 2017}{} %{Affective Computing}
+
+\item\TalkEntry{%Department of Computer Science Seminar Series, 
+University of Regina}{Regina, Canada}{January 2017}{} %{Advances in Deep Learning for Music Generation and Affective Computing}
+\end{etaremune}
+
+% PRESS
+\NewPart{Selected Press}{}
+\begin{etaremune}
+\item\PressEntry{Perlo, J.}{2026, March 19}{Using AI makes writing more bland, study finds.}{https://www.nbcnews.com/tech/tech-news/ai-changing-style-substance-human-writing-study-finds-rcna263789}{NBC News}
+
+\item\PressEntry{Stiffler, L.}{2024, December 18}{University of Washington researchers craft method of fine-tuning AI chatbots for individual taste.}{https://www.geekwire.com/2024/university-of-washington-researchers-craft-method-of-fine-tuning-ai-chatbots-for-individual-taste/}{GeekWire}
+
+\item\PressEntry{Milne, S.}{2024, December 18}{Q\&A: New AI training method lets systems better adjust to users’ values.}{https://www.washington.edu/news/2024/12/18/ai-user-values-preferences-rlhf/}{UW News}
+
+\item\PressEntry{Williams, R.}{2024, August 9}{Google DeepMind trained a robot to beat humans at table tennis.}{https://www.technologyreview.com/2024/08/09/1096102/google-deepmind-trained-a-robot-to-beat-humans-at-table-tennis/}{MIT Technology Review}
+
+\item\PressEntry{Knutson, K.}{2024, August 24}{Don't have anyone to play pingpong with? No problem with this creepy competitive robot.}{https://www.foxnews.com/tech/dont-have-anyone-play-ping-pong-with-no-problem-creepy-competitive-robot}{Fox News}
+
+\item\PressEntry{Heater, B.}{2024, August 8}{Google DeepMind develops a ‘solidly amateur’ table tennis robot.}{https://techcrunch.com/2024/08/08/google-deepmind-develops-a-solidly-amateur-table-tennis-robot/}{TechCrunch}
+
+\item\PressEntry{Cataldo, S.}{2021, November 19}{The sky’s the limit.}{https://www.degreesmagazine.ca/the-skys-the-limit/2021/11/19/}{Degrees Magazine}
+
+\item\PressEntry{Hutson, M.}{2021, January 19}{Who needs a teacher? Artificial intelligence designs lesson plans for itself.}{https://www.sciencemag.org/news/2021/01/who-needs-teacher-artificial-intelligence-designs-lesson-plans-itself}{Science}
+
+\item\PressEntry{Yao, M}{2019, December 12}{Breakthrough Research in Reinforcement Learning.}{https://www.topbots.com/top-ai-reinforcement-learning-research-papers-2019/}{TopBots}
+
+\item\PressEntry{Hutson, M.}{2019, June 17}{DeepMind Teaches AI Teamwork.}{https://spectrum.ieee.org/tech-talk/computing/software/deepmind-teaches-ai-teamwork}{IEEE Spectrum}
+
+\item\PressEntry{Hao, K.}{2019, June 20}{Here are 10 ways AI could help fight climate change.}{https://www.technologyreview.com/s/613838/ai-climate-change-machine-learning/}{MIT Technology Review}
+
+\item\PressEntry{Snow, J.}{2019, July 18}{How artificial intelligence can tackle climate change.}{https://www.nationalgeographic.com/environment/2019/07/artificial-intelligence-climate-change/}{National Geographic}
+
+\item\PressEntry{Gershgorn, D.}{2018, February 16}{Google is building AI to make humans smile.}{https://qz.com/1209466/google-is-building-ai-to-make-humans-smile/}{Quartz}
+
+\item\PressEntry{Knight, W.}{2016, November 30}{AI songsmith cranks out surprisingly catchy tunes.}{https://www.technologyreview.com/s/603003/ai-songsmith-cranks-out-surprisingly-catchy-tunes/}{MIT Technology Review}
+
+\item\PressEntry{Annear, S.}{2015, January 5}{Website tracks your happiness to remind you life’s not so bad.}{http://www.bostonmagazine.com/news/blog/2015/01/05/smiletracker-captures-photos-internet/}{Boston Magazine}
+
+\item\PressEntry{Brace, S.}{2015, January 5}{Regina woman develops smile app at MIT}
+{https://www.cbc.ca/news/canada/saskatchewan/regina-woman-develops-smile-app-at-mit-1.2886943}{Canadian Broadcasting Corporation (CBC)}
+
+\end{etaremune}
+
+
+%%% Papers
+%%% ------------------------------------------------------------
+
+\NewPart{Publications}{\href{https://scholar.google.co.uk/citations?user=8iCb2TwAAAAJ&hl=en}{[Google Scholar]}}
+*Equal Contribution
+\begin{etaremune}
+
+% \item \PaperEntry{Clay, D., Gollapudi, S., Harilal, S. V., Jang, M., Morrison, J., \& \underline{Jaques, N.}}{Demystifying Reinforcement Learning Post-Training of Language Models}{Conference on Language Modeling (COLM) (in submission)}{}{2026}{}
+
+\item \PaperEntry{Liu, B., Yu, S., Jiang, Y., Qu, A., Zhao, A., Liu, Z., Kim, J., Zhou, Z., Kim, S., Ren, T., Liu, M., Yu, H., Chen, Z., Shi, W., Liang, P. P., Zettlemoyer, L., Choi, Y. \& \underline{Jaques, N.}}{SPADE: Self-Play in Adaptive Synthetic Executable Environments}{Preprint}{}{2026}{https://arxiv.org/abs/2608.19197}
+
+\item \PaperEntry{Abdulhai, M., White, I., Wan, Y., Qureshi, I., Leibo, J. Z., Kleiman-Weiner, M. \& \underline{Jaques, N.}}{How LLMs Distort Our Written Language}{Preprint}{}{2026}{https://arxiv.org/abs/2603.18161}
+
+\item \PaperEntry{Kenton, Z., Janzer, L., Greig, R., Teh, T. H., Tyshchuk, K., Brown-Cohen, J., Edwards, H., Rajamanoharan, S., Siegel, N. Y., \underline{Jaques, N.} \& Shah, R.}{Debate Training Reduces Reward Hacking in RLAIF}{Preprint}{}{2026}{https://arxiv.org/abs/2608.17776}
+
+\item \PaperEntry{Yang, M., Casper, S., Stray, J., Li, J., Jones, C., Gausen, A., \underline{Jaques, N.}, Christian, B., Gyevnár, B., Kirk, H., He, Z., Zhao, D., Looi, S. S., Levy, J., Hackenburg, K., Seger, E., Kowal, M., Malonza, M., Hewitt, L., Lin, H., Sap, M., Hadfield-Menell, D., Costello, T., Rabbany, R., Godbout, J.-F., Rand, D., Kasirzadeh, A., Pennycook, G., Bengio, Y., \& Pelrine, K.}{AI Epistemic Risks: Emerging Mechanisms \& Evidence}{Preprint}{}{2026}{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6873005}
+
+\item \PaperEntry{Klissarov, M., Cook, J., Antognini, D., Sun, H., Li, J., \underline{Jaques, N.}, Musat, C., \& Grefenstette, E.}{Improving Interactive In-Context Learning from Natural Language Feedback}{Preprint}{}{2026}{https://arxiv.org/abs/2602.16066}
+
+\item \PaperEntry{Teegavarapu, P., Poddar, S., Qi, R., Winston, C., Khandelwal, K., \underline{Jaques, N.} \& Gupta, A.}{Q-OIL: Optimistic Exploration in Learning from Human Interventions}{Conference on Robot Learning (CoRL)}{}{2026}{}
+
+\item \PaperEntry{Yan, T., \underline{Jaques, N.}*, \& Du, S.*}{The Accidental AI Cartels: Theoretical and Behavioral Foundations of (LLM) Collusion}{Empirical Methods in Natural Language Processing (in submission)}{}{2026}{}
+
+\item \PaperEntry{Liu, K., Hou, X., Yuan, J.,  \& \underline{Jaques, N.}}{Evaluating LLM Agents as Human Simulators in Climate Social Dilemmas}{Empirical Methods in Natural Language Processing (in submission)}{}{2026}{}
+
+\item \PaperEntry{Nam, H., Chidambaram, K., Demszky, D., \& \underline{Jaques, N.}}{Pigeonholing: how bad prompts hurt models, causing collapse and mistakes}{Empirical Methods in Natural Language Processing (EMNLP) findings}{}{2026}{https://arxiv.org/abs/2606.24267}
+
+% Agentic Red here
+\item \PaperEntry{Yuan, J., Nöther, J. \underline{Jaques, N.}, \& Radanović, G.}{AgenticRed: Evolving Agentic Systems for Red-teaming}{Empirical Methods in Natural Language Processing (in submission)}{}{2026}{https://arxiv.org/abs/2601.13518}
+
+\item \PaperEntry{Abdulhai, M., Cheng, R., Shrivastava, A., \underline{Jaques, N.}, Gal, Y., \& Levine, S.}{Evaluating \& Reducing Deceptive Dialogue From Language Models with Multi-turn RL}{Empirical Methods in Natural Language Processing (in submission)}{}{2026}{https://arxiv.org/abs/2510.14318}
+
+\item \PaperEntry{Shaw, A., Hahn, C., Rasgaitis, C., Mishra, Y., Liu, A., \underline{Jaques, N.}, Tsvetkov, Y., \& Zhang, A. X.}{Are Language Models Sensitive to Morally Irrelevant Distractors?}{Empirical Methods in Natural Language Processing (in submission)}{}{2026}{https://arxiv.org/abs/2602.09416}
+
+\item \PaperEntry{Chopra, H., Ghate, K., Caliskan, A., Kohno, T., Shah, C., \& \underline{Jaques, N.}}{Beyond Cooperative Simulators: Generating Realistic User Personas for Robust Evaluation of LLM Agents}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{https://arxiv.org/abs/2605.12894}
+
+\item \PaperEntry{Yuan, J., Kang, H., Liu, J. J., Choi, Y., Iyer, V., Jiang, L., \& \underline{Jaques, N.}}{Forty Shades of Blue: Quality-Diversity Alignment via Mode-Conditioned Reinforcement Learning}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{}
+
+\item \PaperEntry{Zhang, P. Q., Liang, Y., Fairhall, A., \& \underline{Jaques, N.}}{Unifying Partner and Environment Diversity to Improve Human-AI Coordination}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{}
+
+\item \PaperEntry{Liang, Y., Senthil, S., Chen, D., Du, S., \& \underline{Jaques, N.}}{Why Copy Others? Insights into Social Learning from Multi-Agent Reinforcement Learning}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{}
+
+
+\item \PaperEntry{Jha, K., Cicala, F., Aguera y Arcas, B., Richards, B. A., \underline{Jaques, N.}, Kleiman-Weiner, M., \& Niklasson, E.}{Tapes Together Strong: The Co-evolution of Computation and Cooperation}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{https://arxiv.org/abs/2609.10817}
+
+\item \PaperEntry{Yan, T., \underline{Jaques, N.}*, \& Du, S.*}{An Exposure Exposé: Towards Principled AI Indexes for the Future}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{}
+
+\item \PaperEntry{Chang, C., Win Kyi, D., \underline{Jaques, N.}*, \& Leung, K.*}{Do as the Romans Do: Learning Universal Behaviors from Heterogeneous Agents}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{https://arxiv.org/abs/2606.18537}
+
+\item \PaperEntry{Poddar, S., Krantz, J., Chang, M., Puig, X., Mottaghi, R., \underline{Jaques, N.}*, \& Gupta, A.*}{Asymmetric On-Policy Distillation learns In-Context Exploration}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{}
+
+\item \PaperEntry{Zhang, Z., Le Metzger, A., Lyu, J., Chang, C.-C., Shao, J., Liu, Y., Azuh Mensah, E., Wang, E., Heimerl, K., Abowd, G. D., \underline{Jaques, N.}, Patel, S., \& Iyer, V.}{Embedded-Arena: Building Hardware-in-the-Loop Coding Agents to Run AI on Microcontrollers}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{https://arxiv.org/abs/2606.16190}
+
+\item \PaperEntry{Liang, Y., Zhou, R., Zhang, Z., \underline{Jaques, N.}*, \& Du, S.*}{Provably Optimal Policy Learning Over a Distribution of MDPs}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{}
+
+\item \PaperEntry{Zong, H., Liang, Y., Zhou, B., \& \underline{Jaques, N.}}{Learn to Match: Two-Sided Matching with Temporally Extended Feedback}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{https://arxiv.org/abs/2606.06744}
+
+\item \PaperEntry{Li, F., Wu, J., Fu, T., \underline{Jaques, N.}, Zhou, W., \& Kan, M.-Y.}{FlowSteer: Prompt-Only Workflow Steering Exposes Planning-Time Vulnerabilities in Multi-Agent LLM Systems}{Neural Information Processing Systems (NeurIPS) (in submission)}{}{2026}{https://arxiv.org/abs/2605.11514}
+
+\item \PaperEntry{Nam, H., Li, H., \& \underline{Jaques, N.}}{Maximizing mutual information between prompt and response improves LLM performance with no additional data}{International Conference on Machine Learning (ICML)}{}{2026}{https://arxiv.org/abs/2603.19294}
+
+\item \PaperEntry{Motwani, S. R., Nichols, D., London, C., Li, P., Pizzati, F., Blake, A., Hammoud, H., McDonald, T., Naik, A., Ivanova, A., Baskaran, V., Laptev, I., Glatt, R., Ben-Nun, T., Torr, P., \underline{Jaques, N.}, Prabhu, A., Bartoldson, B. R., Kailkhura, B., \& Schroeder de Witt, C.}{LongCoT: Benchmarking Long-Horizon Chain-of-Thought Reasoning}{International Conference on Machine Learning (ICML)}{}{2026}{https://arxiv.org/abs/2604.14140}
+
+
+\item \PaperEntry{Zeng, Z., Ivison, H., Wang, Y., Yuan, L., Li, S., Ye, Z., Li, S., He, J., Zhou, R., Chen, T., Zhao, C., Tsvetkov, Y., Du, S., \underline{Jaques, N.}, Peng, H., Koh, P., \& Hajishirzi, H.}{RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments}{International Conference on Machine Learning (ICML)}{}{2025}{https://arxiv.org/abs/2511.07317}
+
+\item \PaperEntry{Liu, M, Jiang, L., Liang, Y., Du, S., Choi, Y., Althoff, T.* \& \underline{Jaques, N.}*}{Chasing Moving Targets with Online Self-Play Reinforcement Learning for Safer Language Models}{International Conference on Machine Learning (ICML)}{}{2026}{https://arxiv.org/abs/2506.07468}
+
+\item \PaperEntry{Trivedi, R., \underline{Jaques, N.}, Vezhnevets, S., \& Leibo, J. Z.}{Position: Solipsistic superintelligence is unlikely to be cooperative}{International Conference on Machine Learning (ICML) (Position track)}{}{2026}{https://arxiv.org/abs/2606.03237}
+
+\item \PaperEntry{Krishnan, S., Jabbour, J., Zhang, D., \underline{Jaques, N.}, Faust, A., Omidshafiei, S., \& Reddi, V.}{Multi-Agent Reinforcement Learning for Sample-Efficient Deep Neural Network Mapping}{Preprint}{}{2025}{https://arxiv.org/abs/2507.16249}
+
+\item \PaperEntry{Nam, H., Wan, Y., Liu, M., Lian, J., Ahnn, P., \& \underline{Jaques, N.}}{Learning to summarize user information for personalized reinforcement learning from human feedback}{International Conference on Learning Representations (ICLR)}{}{2026}{https://arxiv.org/abs/2507.13579v2}
+
+\item \PaperEntry{Liu, B., Guertler, L., Yu, S., Liu, Z., Qi, P., Balcells, D., Liu, M., Tan, C., Shi, W., Lin, M., Lee, W. S.,  \& \underline{Jaques, N.}}{SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning}{International Conference on Learning Representations (ICLR)}{}{2026}{https://arxiv.org/abs/2506.24119}
+
+\item \PaperEntry{Wu, Y., Brade, S., Ma, T., Fowler, T., Yang, E., Banar, B., Courville, A., \underline{Jaques, N.}* \& Huang, A.*}{Generative Adversarial Post-Training Mitigates Reward Hacking in Live Human-AI Music Interaction}{International Conference on Learning Representations (ICLR)}{}{2026}{https://arxiv.org/abs/2511.17879}
+
+\item \PaperEntry{Jha, K., Huang, A. Y., Ye, E., \underline{Jaques, N.}* \& Kleiman-Weiner, M.*}{Modeling Others' Minds as Code}{International Conference on Learning Representations (ICLR)}{}{2026}{https://arxiv.org/abs/2510.01272}
+
+\item \PaperEntry{Chaudhary, P., Liang, Y., Chen, D., Du, S., \& \underline{Jaques, N.}}{Improving Human-AI Coordination through Adversarial Training and Generative Models}{International Conference on Learning Representations (ICLR)}{}{2026}{https://arxiv.org/abs/2504.15457}
+
+
+\item \PaperEntry{Zhou, S., Zheng, Z., Liu, K., Shen, Z., Cheng, Z., Chen, Z., He, H., Yao, J., Mao, H., Mang, Q., Fu, T., Li, B., Li, D., Chai, W., Liu, Z., Korolova, A., Henderson, P., \underline{Jaques, N.}, Viswanath, P., Xie, S., \& Shang, J.}{AutoCode: LLMs as Problem Setters for Competitive Programming}{International Conference on Learning Representations (ICLR)}{}{2026}{https://arxiv.org/abs/2510.12803}
+
+\item \PaperEntry{Wan, Y., Wu, J., Abdulhai, M., Shani, L., \& \underline{Jaques, N.}}{Enhancing Personalized Multi-Turn Dialogue with Curiosity Reward}{Neural Information Processing Systems (NeurIPS)}{}{2025}{https://arxiv.org/abs/2504.03206}
+
+\item \PaperEntry{Abdulhai, M., Cheng, R., Clay, D., Althoff, T., Levine, S., \& \underline{Jaques, N.}}{Consistently Simulating Human Personas with Multi-Turn Reinforcement Learning
+}{Neural Information Processing Systems (NeurIPS)}{}{2025}{https://arxiv.org/abs/2511.00222}
+
+\item \PaperEntry{Smith, C., Abdulhai, M., Díaz, M., Tesic, M., Trivedi, R., Vezhnevets, S., Hammond, L., Clifton, J., Chang, M., Duenez-Guzman, E., Agapiou, J., Matyas, J., Karmon, D., Zhang, B., Dilkes, J., Kundu, A., Nguyen, H. M., Tewolde, E., Purbey, J., Kadiyala, R. M. R., Gupta, S., Korshuk, A., Buyantuev, A., Makarov, I., Zhao, G., Fernandez, R., Wang, Z., Wang, C., Cui, J., Xiao, L., Shi, D., Sung, Y., Rahman, M. A., Stone, P., Kang, Y., Yun, H., Ananya, A., Cha, T., Wu, Z., Tennant, E., Macmillan-Scott, O., Segura, M., Riazi, D., Cui, F., Ganapathi, S., Klassen, T., Schiavone, N., Alim, M., McIlraith, S., Rios, M., Peña, O., Rojas, C., Chacon-Chamorro, M., Manrique, R., Giraldo, L. F., Quijano, N., Wang, Y., Chen, Y., Zhong, F., Wang, M., Tu, W., Zhang, Z., Chen, Z., Jia, Z., Feng, X., Zheng, Z., Lin, C., Fan, W., Liu, C., Sarangi, S., Wang, Z., Shi, S., Du, Y., Kulandaivel, A. A., Liu, Y., Ruiyang, W., Talele, C., Lu, S., Parreno, G., Dhuri, S., McHale, B., Baarslag, T., Hadfield-Menell, D., \underline{Jaques, N.}, Hernández-Orallo, J., \& Leibo, J.}{Evaluating Generalization Capabilities of LLM-Based Agents in Mixed-Motive Scenarios Using Concordia}{Neural Information Processing Systems (NeurIPS)}{}{2025}{https://neurips.cc/virtual/2025/loc/san-diego/poster/121382}
+
+\item \PaperEntry{Jha, K., Carvalho, W., Liang, Y., Du., S., Kleiman-Weiner, M.*, \& \underline{Jaques, N.}*}{Cross-environment Cooperation Enables Zero-shot Multi-agent Coordination}{International Conference on Machine Learning (ICML) \textbf{Oral (top 1\% of submissions)}}{}{2025}{https://arxiv.org/abs/2504.12714}
+
+\item \PaperEntry{Scarlatos, A., Wu, Y., Simon, I., Roberts, A., Cooijmans, T., \underline{Jaques, N.}, Tarakajian, C., \& Huang, C.-Z. A.}{ReaLJam: Real-Time Human-AI Music Jamming with Reinforcement Learning-Tuned Transformers}{Computer Human Interaction (CHI) Late Breaking Works}{}{2025}{https://arxiv.org/abs/2502.21267}
+
+\item \PaperEntry{Ye, E., Tao, R., \& \underline{Jaques, N.}}{An Efficient Open World Benchmark for Multi-Agent Reinforcement Learning}{NeurIPS Open World Agents workshop}{}{2025}{https://arxiv.org/abs/2508.15679}
+
+\item \PaperEntry{Li, M., Bae, E., Haberland, C. \& \underline{Jaques, N.}*}{Generative Modeling for Robust Deep Reinforcement Learning on the Traveling Salesman Problem}{NeurIPS MATH.AI Workshop}{}{2025}{https://arxiv.org/abs/2508.08718}
+
+\item \PaperEntry{D'Ambrosio, D., Abeyruwan, S., Graesser, L.,  Iscen, A., Ben Amor, H., Bewley, A., Reed, B. J., Reymann, K.,  Takayama, L., Tassa, Y., Choromanski, K., Coumans, E., Jain, D.,  Jaitly, N., \underline{Jaques, N.}, Kataoka, S., Kuang, Y.,  Lazic, N., Mahjourian, R., Moore, S., Oslund, K., Shankar, A.,  Sindhwani, A., Vanhoucke, V., Vesom, G., Xu, P., \& Sanketi, P. R.
+}{Achieving Human Level Competitive Robot Table Tennis}{International Conference on Robotics and Automation (ICRA) \textbf{Best Paper Nominee (top 0.25\%)}}{}{2025}{https://arxiv.org/abs/2408.03906}
+
+\item \PaperEntry{Hou, X., Yuan, J., Leibo, J., \& \underline{Jaques, N.}}{InvestESG: A multi-agent reinforcement learning benchmark for studying climate investment as a social dilemma}{International Conference on Learning Representations (ICLR)}{}{2025}{https://arxiv.org/abs/2411.09856}
+
+\item \PaperEntry{Wan, Y., Wu, Y., Wang, Y., Mao, J.* \& \underline{Jaques, N.}*}{Infer Human’s Intentions Before Following
+Natural Language Instructions}{Association for the Advancement of Artificial Intelligence (AAAI)}{}{2025}{https://arxiv.org/abs/2409.18073}
+
+
+\item \PaperEntry{Holder, J., \underline{Jaques, N.}, \& Mesbahi, M.}{Multi Agent Reinforcement Learning for Sequential
+Satellite Assignment Problems}{Association for the Advancement of Artificial Intelligence (AAAI) \textbf{Oral (top 5\% of submissions)}}{}{2025}{https://arxiv.org/abs/2412.15573}
+
+\item \PaperEntry{Poddar, S., Wan, Y., Gupta, A.*, \& \underline{Jaques, N.}*}{Personalizing Reinforcement Learning from Human
+Feedback with Variational Preference Learning}{Neural Information Processing Systems (NeurIPS) \textbf{Spotlight (top 2\% of submissions)}; %https://papercopilot.com/statistics/neurips-statistics/. 
+\textbf{Best Paper runner up at the NeurIPS workshop on Pluralistic Alignment}}{}{2024}{https://arxiv.org/abs/2408.10075}
+
+\item \PaperEntry{Liang, Y., Chen, D., Gupta, A., Du, S.*, \& \underline{Jaques, N.}*}{Learning to Cooperate with Humans Using Generative Agents}{Neural Information Processing Systems (NeurIPS)}{}{2024}{https://arxiv.org/abs/2411.13934}
+
+\item \PaperEntry{Smith, C., Trivedi, R., Clifton, J., Hammond, L., Khan, A., Vezhnevets, S., Agapiou, J.P., Duéñez-Guzmán, E.A., Matyas, J., Karmon, D. and Abdulhai, M., Hadfield-Menell, D., \underline{Jaques, N.}, Leibo, Z., Slumbers, O., Baarslag, T., \& Chang, M.}{The Concordia Contest: Advancing the Cooperative Intelligence of Language Agents}{Neural Information Processing Systems (NeurIPS) Competition Track}{}{2024}{https://openreview.net/forum?id=dfeFy1PSSw}
+
+
+\item \PaperEntry{Wu, Y., Cooijmans, T., Kastner, K., Roberts, A., Simon, I., Scarlatos, A., Donahue, C., Tarakajian, C., Omidshafiei, S., Courville, A., Castro, P., \underline{Jaques, N.}, \& Huang, C.-Z. A.}{Adaptive Accompaniment with ReaLchords}{International Conference on Machine Learning (ICML)}{}{2024}{https://openreview.net/pdf?id=mUVydzrkgz}
+
+
+
+\item \PaperEntry{Bilodeau, B., \underline{Jaques, N.}, Koh, P. W., \& Kim, B.}{Impossibility Theorems for Feature Attribution}{Proceedings of the National Academy of Sciences (PNAS)}{}{2024}{https://arxiv.org/abs/2212.11870}
+
+\item \PaperEntry{Grupen, N., \underline{Jaques, N.}, Kim, B., \& Omidshafiei, S.}{Concept-based Understanding of Emergent Multi-Agent Behavior}{NeurIPS Deep Reinforcement Learning}{}{2023}{https: workshop//openreview.net/pdf?id=W9Sn6vTYP3}
+
+\item \PaperEntry{Abdulhai, M., Crepy, C., Valter, D., Canny, J., Levine, S., \& \underline{Jaques, N.}}{Moral Foundations of Large Language Models}{\textbf{Best Paper at the AAAI workshop on Representation Learning for Responsible Human-Centric AI (2023)}, Empirical Methods in Natural Language Processing (EMNLP)}{}{2024}{https://arxiv.org/abs/2310.15337}
+
+
+\item \PaperEntry{Krishnan, S., \underline{Jaques, N.}, Omidshafiei, S., Zhang, D., Gur, I., Reddi, V. J., \& Faust, S.}{Multi-Agent Reinforcement Learning for Hardware Architecture Search: A Case Study on Domain-Specific DRAM Memory Controller Design}{NeurIPS Machine Learning for Systems workshop}{}{2022}{https://arxiv.org/abs/2211.16385}
+
+\item \PaperEntry{Wang, R. E., Mu, J., Arumugam, D., \underline{Jaques, N.}, \& Goodman, N.}{In the ZONE: Measuring difficulty and  progression in curriculum generation}{NeurIPS 2022 Deep Reinforcement Learning Workshop}{}{2022}{https://openreview.net/pdf?id=SgBHmHMctfd}
+
+\item \PaperEntry{Abdulhai, M., \underline{Jaques, N.}, \& Levine, S.}{Basis for Intentions: Efficient Inverse Reinforcement Learning using Past Experience}{Preprint}{}{2022}{https://arxiv.org/abs/2208.04919}
+
+\item \PaperEntry{de Looff, P., Duursma, R., Noordzij., M. L., Taylor, S., \underline{Jaques, N.}, Scheepers, F., De Schepper, K., \& Koldijk, S.}{Wearables: an R package with accompanying Shiny application for signal analysis of a wearable device targeted at clinicians and researchers}{Frontiers in behavioral neuroscience}{}{2022}{https://www.frontiersin.org/articles/10.3389/fnbeh.2022.856544/pdf}
+
+\item \PaperEntry{Wang, S., Montgomery, C., Orbay, J., Birodkar, V., Faust, A., Gur, I., \underline{Jaques, N.}, Waters, A., Baldridge, J., \& Anderson, P.}{Less is More: Generating Grounded Navigation Instructions from Landmarks}{Computer Vision and Pattern Recognition (CVPR)}{Virtual}{2022}{https://arxiv.org/abs/2111.12872}
+
+\item \PaperEntry{Gur, I., \underline{Jaques, N.}, Malta, K., Tiwari, M., Lee, H., \& Faust, A.}{Environment Generation for Zero-Shot Compositional Reinforcement Learning}{Neural Information Processing Systems (NeurIPS)}{Virtual}{2021}{https://papers.nips.cc/paper/2021/file/218344619d8fb95d504ccfa11804073f-Paper.pdf }
+
+\item \PaperEntry{Filos, A., Lyle, C., Gal, Y., Levine, S., \underline{Jaques, N.*}, \& Farquhar, G.*}{PsiPhi-Learning: Reinforcement Learning with Demonstrations using Successor Features and Inverse Temporal Difference Learning}{International Conference on Machine Learning (ICML) \textbf{Oral (top 3\% of submissions)}}{Virtual}{2021}{https://arxiv.org/pdf/2102.12560.pdf}
+
+\item \PaperEntry{Ndousse, K., Eck, D., Levine, S., \& \underline{Jaques, N.}}{Emergent Social Learning via Multi-agent Reinforcement Learning}{International Conference on Machine Learning (ICML) }{Virtual}{2021}{https://arxiv.org/abs/2010.00581}
+
+\item \PaperEntry{Fickinger, A.*, \underline{Jaques, N.*}, Parajuli, S., Chang, M., Rhinehart, N., Berseth, G., Russell, S., \& Levine, S.}{Explore and Control with Adversarial Surprise}{ICML Unsupervised Reinforcement Learning workshop}{Virtual}{2021}{https://arxiv.org/abs/2107.07394}
+
+\item \PaperEntry{Lee, D., \underline{Jaques, N.}, Kew, J., Eck, D., Schuurmans, D., \& Faust, A.}{Joint Attention for Multi-Agent Coordination and Social Learning}{ICRA Social Intelligence Workshop \textbf{Spotlight talk}}{Virtual}{2021}{https://arxiv.org/abs/2104.07750}
+
+\item \PaperEntry{Ndousse, K., Eck, D., Levine, S., \& \underline{Jaques, N.}}{Learning Social Learning}{NeurIPS Cooperative AI Workshop \textbf{Best Paper} }{Virtual}{2020}{https://arxiv.org/abs/2010.00581}
+
+\item \PaperEntry{Dennis, M.*, \underline{Jaques, N.*}, Vinitsky, E., Bayen, A., Russell, S., Critch, A., \& Levine, S.}{Emergent Complexity and Zero-Shot Transfer via Unsupervised Environment Design}{Neural Information Processing Systems (NeurIPS) \textbf{Oral (top 1\% of submissions)}}{Virtual}{2020}{https://arxiv.org/abs/2012.02096}
+
+\item \PaperEntry{\underline{Jaques, N.*}, Shen, J. H.*, Ghandeharioun, A., Ferguson, C., Lapedriza, A., Jones, N., Gu, S., \& Picard, R.}{Human-Centric Dialog Training via Offline Reinforcement Learning}{Empirical Methods in Natural Language Processing (EMNLP)}{Virtual}{2020}{https://arxiv.org/pdf/2010.05848.pdf}
+
+\item \PaperEntry{\underline{Jaques, N.}}{Social and Affective Machine Learning}{Massachusetts Institute of Technology}{PhD Thesis}{2019}{https://www.media.mit.edu/publications/social-and-affective-machine-learning/}
+
+\item \PaperEntry{Saleh, A.*, \underline{Jaques, N.*}, Ghandeharioun, A., Shen, J. H., \& Picard, R.}{Hierarchical Reinforcement Learning for Open-Domain Dialog}{Association for the Advancement of Artificial Intelligence (AAAI) \textbf{Oral (top 7.8\% of submissions), Best Paper Nominee at the NeurIPS workshop on Conversational AI}}{New York, USA}{2019}{https://arxiv.org/abs/1909.07547}
+
+\item \PaperEntry{\underline{Jaques, N.}, Ghandeharioun, A., Shen, J. H., Ferguson, C., Lapedriza, A., Jones, N., Gu, S., \& Picard, R.}{Way Off-Policy Batch Deep Reinforcement Learning of Implicit Human Preferences in Dialog}{Neural Information Processing Systems (NeurIPS) Workshop on Conversational AI}{Vancouver, Canada}{2019}{https://arxiv.org/abs/1907.00456}
+
+\item \PaperEntry{Ghandeharioun, A.*, Shen, J. H.*, \underline{Jaques, N.*}, Ferguson, C., Jones, N., Lapedriza, A., \& Picard, R.}{Approximating Interactive Human Evaluation with Self-Play for Open-Domain Dialog Systems}{Neural Information Processing Systems (NeurIPS)}{Vancouver, Canada}{2019}{https://arxiv.org/abs/1906.09308}
+
+\item \PaperEntry{Rolnick, D., Donti, P. L., Kaack, L. H., Kochanski, K., Lacoste, A., Sankaran, K., Ross, A. S., Milojevic-Dupont, N., \underline{Jaques, N.}, Waldman-Brown, A., Luccioni, A., Maharaj, T., Sherwin, E. D., Mukkavilli, S. K., Kording, K. P., Gomes, C., Ng, A. Y., Hassabis, D., Platt, J. C., Creutzig, F., Chayes, J., Bengio, Y.}{Tackling Climate Change with Machine Learning}{ACM Computing Surveys}{}{2019}{https://arxiv.org/abs/1906.05433}
+
+\item \PaperEntry{\underline{Jaques, N.}, Lazaridou, A., Hughes, E., Gulcehre, C., Ortega, P. A., Strouse, D. J., Leibo, J.Z. \& de Freitas, N.}{Social Influence as Intrinsic Motivation for Multi-Agent Deep Reinforcement Learning}{International Conference on Machine Learning (ICML) \textbf{Best Paper Honourable Mention (top 0.26\% of submissions)}}{Long Beach, USA}{2019}{https://arxiv.org/pdf/1810.08647.pdf}
+
+\item \PaperEntry{Jones, N., \underline{Jaques, N.}, Pataranutaporn, P., Ghandeharioun, A., \& Picard, R.}{Automatic Triage and Analysis of Online Suicide Risk with Document Embeddings and Latent Dirichlet Allocation}{Affective Computing and Intelligence Interaction (ACII) workshop on Machine Learning for Mental Health}{}{2019}{https://drive.google.com/file/d/1muoFj_BXJUZCRyjCLEX9DxKOz7b9nKtj/view?usp=sharing}
+
+\item \PaperEntry{\underline{Jaques, N.}, McCleary, J., Engel, J., Ha, D., Bertsch, F.,  Eck, D. \& Picard, R.}{Learning via Social Awareness: Improving a Deep Generative Sketching Model with Facial Feedback}{International Conference on Learning Representations (ICLR) workshop}{}{2018}{https://arxiv.org/pdf/1802.04877.pdf}
+
+\item \PaperEntry{Johnson, K., Taylor, S., Fedor, S., \underline{Jaques, N.}, Chen, W., \& Picard, R.}{Vomit Comet Physiology: Autonomic Changes in Novice Flyers}{IEEE Engineering in Medicine and Biology Society (EMBC)}{Honolulu, USA}{2018}{https://dspace.mit.edu/bitstream/handle/1721.1/123805/18.Johnson-etal_EMBC18_VomitComet.pdf?sequence=1&isAllowed=y}
+
+\item \PaperEntry{\underline{Jaques, N.}, Gu, S., Bahdanau, D., Hern\'{a}ndez-Lobato, J. M., Turner, R. E. \& Eck, D.}{Sequence Tutor: Conservative Fine-Tuning of Sequence Generation Models with KL-control}{International Conference on Machine Learning (ICML)}{Sydney, Australia}{2017}{https://arxiv.org/pdf/1611.02796.pdf}
+
+\item \PaperEntry{Taylor, S.*, \underline{Jaques, N.*}, Nosakhare, E., Sano, A. \& Picard, R.}{Personalized Multitask Learning for Predicting Tomorrow's Mood, Stress, and Health}{IEEE Transactions on Affective Computing}{}{2017}{https://www.media.mit.edu/publications/taffc-personalized-multitask-learning-for-predicting-tomorrow-s-mood-stress-and-health/}
+
+\item \PaperEntry{\underline{Jaques, N.}, Rudovic, O., Taylor, S., Sano, A. \& Picard, R.}{Predicting Tomorrow’s Mood, Health, and Stress Level using Personalized Multitask Learning and Domain Adaptation}{Proceedings of Machine Learning Research}{48, 17-33}{2017}{http://proceedings.mlr.press/v66/jaques17a/jaques17a.pdf}
+
+\item \PaperEntry{\underline{Jaques, N.}, Taylor, S., Sano, A. \& Picard, R.}{Multimodal Autoencoder: A Deep Learning Approach to Filling in Missing Sensor Data and Enabling Better Mood Prediction}{International Conference on Affective Computing and Intelligent Interaction (ACII)}{San Antonio, USA}{2017}{https://ieeexplore.ieee.org/document/8273601}
+
+\item \PaperEntry{Taylor, S., \underline{Jaques, N.}, E. Nosakhare, Sano, A., Klerman, E. B. \& Picard, R.}{Importance of Sleep Data in Predicting Next-Day Stress, Happiness, and Health in College Students}{Journal of Sleep and Sleep Disorders Research (suppl\_1)}{A294-A295}{2017}{https://academic.oup.com/sleep/article-abstract/40/suppl_1/A294/3782233}
+
+\item \PaperEntry{\underline{Jaques, N.}, Gu, S., Turner, R. E. \& Eck, D.}{Tuning Recurrent Neural Networks with Reinforcement Learning}{International Conference on Learning Representations (ICLR) - workshop}{Toulon, France}{2016}{https://openreview.net/pdf?id=Syyv2e-Kx}
+
+\item \PaperEntry{\underline{Jaques, N.*}, Taylor S.*, Nosakhare E., Sano A. \& Picard R.}{Multi-task Learning for Predicting Health, Stress, and Happiness}{Neural Information Processing Systems (NeurIPS) Workshop on Machine Learning for Healthcare \textbf{Best Paper}}{Barcelona, Spain}{2016}{https://pdfs.semanticscholar.org/b228/7a406985980515d5cc63e9b37fb17c5186f8.pdf}
+
+\item \PaperEntry{Roberts, A., Engel, J., Hawthorne, C., Simon, I., Waite, E., Oore, S., \underline{Jaques, N.}, Resnick, C. \& Eck, D.}{Interactive Musical Improvisation with Magenta}{Neural Information Processing Systems (NeurIPS) \textbf{Best Demo}}{Barcelona, Spain}{2016}{https://nips.cc/Conferences/2016/Schedule?showEvent=6307}
+
+\item \PaperEntry{\underline{Jaques, N.}, McDuff, D., Kim, Y. K., \& Picard R.}{Understanding and Predicting Bonding in Conversations Using Thin Slices of Facial Expressions and Body Language}{Intelligent Virtual Agents (IVA)}{Los Angeles, USA}{2016}{https://dspace.mit.edu/handle/1721.1/138086.2}
+
+\item \PaperEntry{\underline{Jaques, N.}, Kim, Y. K., \& Picard R.}{Personality, Attitudes, and Bonding in Conversations}{Intelligent Virtual Agents (IVA)}{Los Angeles, USA}{2016}{https://www.media.mit.edu/publications/personality-attitudes-and-bonding-in-conversations/}
+
+\item \PaperEntry{\underline{Jaques, N.}, Rich, T., Dinakar, K., Farve, N., Chen, W.V., Maes, P. \& Picard, R.}{BITxBIT: Encouraging Behavior Change with N=2 Experiments}{Proceedings of the CHI Conference Extended Abstracts on Human Factors}{San Jose, USA}{2016}{https://dspace.mit.edu/bitstream/handle/1721.1/137083/16.Jaques-etal-CHI.pdf?sequence=2&isAllowed=y}
+
+\item \PaperEntry{Taylor, S., \underline{Jaques, N.}, Sano, A., Azaria, A., Ghandeharioun, A. \& Picard, R.}{Machine Learning of Sleep and Wake Behaviors to Classify Self-Reported Evening Mood}{Sleep}{Denver, USA}{2016}{https://www.media.mit.edu/publications/machine-learning-of-sleep-and-wake-behaviors-to-classify-self-reported-evening-mood/}
+
+\item \PaperEntry{\underline{Jaques, N.*}, Taylor, S.*, Sano, A. \& Picard, R.}{Multi-task Multi-Kernel Learning for Estimating Individual Wellbeing}{Neural Information Processing Systems (NeurIPS) Workshop on Multimodal Machine Learning}{Montreal, Canada}{2015}{https://www.media.mit.edu/publications/multi-task-multi-kernel-learning-for-estimating-individual-wellbeing/}
+
+\item \PaperEntry{Xia, V., \underline{Jaques, N.}, Taylor, S., Fedor, S. \& Picard, R.}{Active learning for Electrodermal Activity classification}{IEEE Conference on Signal Processing in Medicine and Biology (SPMB)}{Philadelphia, USA}{2015}{https://dspace.mit.edu/openaccess-disseminate/1721.1/109392}
+
+\item \PaperEntry{\underline{Jaques, N.*}, Taylor, S.*, Azaria, A., Ghandeharioun, A., Sano, A. \& Picard R.}{Predicting students' happiness from physiology, phone, mobility, and behavioral data}{International Conference on Affective Computing and Intelligent Interaction (ACII)}{Xi'an, China}{2015}{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5431070/}
+
+\item \PaperEntry{Taylor, S.*, \underline{Jaques, N.*}, Chen, W., Fedor, S., Sano, A. \& Picard, R.}{Automatic identification of artifacts in Electrodermal Activity data}{International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC)}{Milan, Italy}{2015}{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5413200/}
+
+\item \PaperEntry{Chen, W., \underline{Jaques, N.}, Taylor, S., Sano, A., Fedor, S. \& Picard R.}{Wavelet-based motion artifact removal for Electrodermal Activity}{International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC)}{Milan, Italy}{2015}{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5413204/}
+
+\item \PaperEntry{Sano, A., Yu, A. Z., McHill, A. W., Phillips, A.J., Taylor, S., \underline{Jaques, N.}, Czeisler, C. A., Klerman, E. B. \& Picard, R.}{Prediction of happy-sad mood from daily behaviors and previous sleep history}{International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC)}{Milan, Italy}{2015}{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4768795/}
+
+\item \PaperEntry{\underline{Jaques, N.} \& Farve, N.}{Engaging the workplace with challenges}{International Conference on Persuasive Technologies}{Chicago, USA}{2015}{https://drive.google.com/file/d/15Pimm1FwwxSPPX04KTr84ilVHJvVExPd/view?usp=sharing}
+
+\item \PaperEntry{\underline{Jaques, N.}, Chen, W. V. \& Picard, R.}{SmileTracker: Automatically and Unobtrusively Recording Smiles and their Context.}{Proceedings of the CHI Conference Extended Abstracts}{Seoul, Korea}{2015}{https://www.media.mit.edu/publications/smiletracker-automatically-and-unobtrusively-recording-smiles-and-their-context/}
+
+\item \PaperEntry{Sano, A., Phillips, A. J., Yu, A. Z., McHill, A. W., Taylor, S., \underline{Jaques, N.}, Czeisler, C. A., Klerman, E. B. \& Picard, R.}{Recognizing academic performance, sleep quality, stress level, and mental health using personality traits, wearable sensors and mobile phones}{Wearable and Implantable Body Sensor Networks (BSN)}{Cambridge, USA}{2015}{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5431072/}
+
+\item \PaperEntry{\underline{Jaques, N.}}{Predicting Affect in an Intelligent Tutoring System}{University of British Columbia}{Master's Thesis}{2014}{https://open.library.ubc.ca/collections/ubctheses/24/items/1.0135541}
+
+\item \PaperEntry{\underline{Jaques, N.}, Conati, C., Harley, J. M. \& Azevedo, R.}{Predicting Affect from Gaze Data During Interaction with an Intelligent Tutoring System}{Intelligent Tutoring Systems}{Honolulu, USA}{2014}{http://www.cs.ubc.ca/~conati/my-papers/ITS-Natasha-2014.pdf}
+
+\item \PaperEntry{Conati, C., \underline{Jaques, N.} \& Muir, M.}{Understanding attention to adaptive hints in educational games: an eye-tracking study}{International Journal of Artificial Intelligence in Education}{23(1-4), 136-161}{2013}{https://link.springer.com/article/10.1007/s40593-013-0002-8}
+
+\item \PaperEntry{\underline{Jaques, N.}}{Emotionally Adaptive Intelligent Tutoring Systems using POMDPs}{Unpublished manuscript}{}{2013}{https://drive.google.com/file/d/1oKVJwaU0hwSeu1oUWQSH9W29eUj-j_gm/view?usp=sharing}
+
+\item \PaperEntry{\underline{Jaques, N.}}{Fast Johnson–Lindenstrauss transform for classification of high dimensional data}{Unpublished manuscript}{}{2013}{https://drive.google.com/file/d/1qBSWgePvclrjiQMVz2ir4w8wM1cqNU__/view?usp=sharing}
+
+\item \PaperEntry{\underline{Jaques, N.} \& Nutini, J.}{A Comparison of Random Forests and Dropout Nets for Sign Language Recognition with the Kinect}{Unpublished manuscript}{}{2013}{https://drive.google.com/file/d/1F9X_xhKUYDJwuz9Eql548OlRpUW1M63X/view?usp=sharing}
+
+\end{etaremune}
+
+\NewPart{Teaching}{}
+\CourseEntry{Stanford CS234: Reinforcement Learning}{Winter 2025}{Guest Lecturer}
+{I gave a \href{https://www.youtube.com/watch?v=NTSYgbwBVaY&t=2s&ab_channel=NatashaJaques}{lecture} on reinforcement learning fine-tuning of large language models.}
+\sepspace
+
+\CourseEntry{UW CSE 446/546 Machine Learning}{2025-2026}{Assistant Professor}
+{I taught a large service class on machine learning:  \url{https://courses.cs.washington.edu/courses/cse446/25wi/}.}
+\sepspace
+
+\CourseEntry{UW CSE 599J Social Reinforcement Learning}{2024-2025}{Assistant Professor}
+{I developed and taught a class focused on \href{https://courses.cs.washington.edu/courses/cse599j/24sp/}{Social Reinforcement Learning}, which included multi-agent learning, coordination, emergent complexity, inverse RL, and RLHF (see the \href{https://docs.google.com/spreadsheets/d/15-ERP_wOeHLU8adFOVFSxMeUonjSdCqdvJ-OFJIMhWM/edit?gid=0#gid=0}{syllabus}).}
+\sepspace
+
+\CourseEntry{Freshman Direct-Admit Seminar CSE 190B}{Autumn 2023}{Guest Lecturer}
+{I gave a brief lecture on reinforcement learning from human feedback (RLHF) for fine-tuning large language models, and my lab's work.}
+\sepspace
+
+\CourseEntry{Tutorial at the Cooperative AI Foundation Retreat}{Summer 2023}{ Lecturer}
+{I gave a \href{https://www.youtube.com/watch?v=56PlUikhB3o&list=PL4gbzAVOpp7AN4mYx7-KQN-T1Zv82uNu-&index=3}{tutorial} on Reinforcement Learning from Human Feedback (RLHF), connecting two lines of research into learning from human feedback, and fine-tuning language models with RL.}
+\sepspace
+
+\CourseEntry{UC Berkeley CS285 Deep Reinforcement Learning}{Fall 2021}{Guest Lecturer}
+{I prepared and gave a guest lecture on multi-agent reinforcement learning, including problems of coordination and how to design multi-agent systems to induce the emergence of complex behavior.}
+\sepspace
+
+\CourseEntry{Tsinghua University Introduction to Artificial Intelligence}{Fall 2021}{Guest Lecturer}
+{I prepared and gave a guest lecture on multi-agent reinforcement learning, including problems of coordination and how to design multi-agent systems to induce the emergence of complex behavior.}
+\sepspace
+
+\CourseEntry{Tutorial at the Conference on Robot Learning (CoRL)}{Fall 2021}{Lecturer}
+{I prepared a tutorial on Social Reinforcement Learning for CoRL, which focused on multi-agent coordination, and multi-agent learning as a tool to improve learning and generalization for a single RL agent. There were approximately 250 attendees.}
+\sepspace
+
+\CourseEntry{MIT MAS.S61 - Personalized Machine Learning (Graduate level)}{Spring 2017}{Teaching Assistant}
+{The first iteration of a course focused on multi-task and domain adaptation methods for training machine learning classifiers that are personalized to fit the individual, but which still gain statistical strength from the population. Several projects I completed during my PhD were used to create material for the course; I delivered lectures, recitations, \href{https://github.com/natashamjaques/PersonalizedML}{designed teaching material and assignments}, and helped grade projects.}
+\sepspace
+
+\CourseEntry{MIT 6.867 - Machine Learning (Graduate level)}{Fall 2016}{Teaching Assistant}
+{MIT's main graduate level course on machine learning methods. In addition to delivering recitations and grading homework and exams, I developed the first deep learning assignment for the course.}
+\sepspace
+
+\CourseEntry{UBC CPSC 344 - Intro to HCI Methods (Graduate level)}{Fall 2013}{Teaching Assistant}
+{Tools and techniques teaching a systematic approach to interface design, task analysis, analytic and empirical evaluation.}
+\sepspace
+
+\CourseEntry{UBC CPSC 430 - Computers and Society}{Fall 2012}{Teaching Assistant}
+{A course examining the social and ethical issues of modern technology.}
+\sepspace
+
+\CourseEntry{U. of R. CS 102 - Intro to Computer Science}{Summer 2012}{Sessional Lecturer}
+{Taught an intro CS course, and developed a novel set of course material, including the syllabus, lecture notes, and homework assignments.}
+\sepspace
+
+\CourseEntry{U. of R. Math 110 - Calculus I}{Fall 2010}{Supplemental Instruction}
+{Delivered recitations to help students work understand differentiation, integration, optimization, etc.}
+\sepspace
+
+\CourseEntry{U. of R. CS 102 - Intro to Computer Science}{2008-2012}{Supplemental Instruction}
+{Led optional recitations for intro to computer science, answering questions and designing problems to help students understand the material. As one of the first students to participate in the program, I helped to develop materials for it, including creating a web app to support it.}
+
+% TEACHING
+\NewPart{Student Advising and Mentorship}{}
+% \textit{\textattachfile[color=1 0 1]{teaching.pdf}{@ U. Maryland, Physics Dept.}:}
+%\vspace{-24pt}
+\begin{multicols}{2}
+\noindent \textbf{PhD students - in my lab}
+\begin{etaremune}
+    \item Jiayi (Carrie) Yuan, UW (2025-present)
+    \item Kunal Jha, UW (2024-present)
+    \item Mickel Liu, UW (2024-present)
+    \item Sriyash Poddar, UW (2023-present)
+    \item Yancheng Liang, UW (2023-present)
+    \item Yanming Wan, UW (2023-present)    
+\end{etaremune}
+
+\noindent \textbf{Post docs - in my lab}
+\begin{etaremune}
+    \item Tom Yan, UW (2025-present)
+\end{etaremune}
+
+\noindent \textbf{PhD students - advising relationship}
+\begin{etaremune}
+    \item Bo Liu, National University of Singapore (2025-present)
+    \item Alex Nam, Stanford (2025-present)
+    \item Xiaoxuan Hou, UW Foster School (2024-present)
+    \item Harine Ravichandran, UW (2023-present)
+    \item Daphne Chen, UW (2023-2024)
+    \item Harsh Agrawal, Georgia Tech (2022)
+    \item Blair Bilodeau, U. of Toronto (2022)
+    \item Niko Grupen, Cornell (2022)
+    \item Srivatsan Krishnan, Harvard (2022)
+    \item Arnaud Fickinger, Berkeley (2021)
+    \item Angelos Filos, Oxford (2021)
+    \item Marwa Abdulhai, Berkeley (2020-present)
+\end{etaremune}
+
+% \columnbreak
+\noindent \textbf{Master's students}
+\begin{etaremune}
+    \item Jiayi (Carrie) Yuan, UW (2024-2025)
+    \item Paresh Chaudhary, UW (2024-2025)
+    \item Judy Shen, MIT (2018-present)
+\end{etaremune}
+
+\noindent \textbf{Undergraduate students}
+\begin{etaremune}
+    \item Lawrence Onyango, UW (2025-present)
+    \item Kaiyuan Liu, UW (2025-present)
+    \item Donovan Clay, UW (2025-present)
+    \item Sankar Harilal, UW (2025-present)
+    \item Saket Gollapudi, UW (2025-present)
+    \item Eric Ye, UW (2024-present)
+    \item Tia-Jane Fowler, UW (2023-present)
+    \item Shakti Senthil, UW (2024-2025)
+    \item Ren Tao, UW (2024-2025)
+    \item Michael Li, UW (2024-2025)
+    \item Jorge Orbay, Google (2021-2023)
+    \item Samyak Parajuli, Berkeley (2021)
+    \item Kamal Ndousse, OpenAI (2020)
+    \item Dennis Lee, Google (2020)
+    \item Abdul Saleh, MIT (2019)
+    \item Rose Wang, MIT (2019-present)
+    \item Nadja Rhodes, OpenAI (2018-present)
+    \item Jenn Kim, MIT (2015-2016)
+    \item Jennifer McCleary, MIT (2015)
+    \item Victoria Xia, MIT (2015)
+\end{etaremune}
+\end{multicols}
+
+
+\noindent \textbf{Thesis and Exam Committees}
+\begin{itemize}
+    \item Zhihan Zhang, UW PhD -- Thesis Committee
+    \item Matteo Bettini, Oxford PhD -- Thesis Committee
+    \item Marwa Abdulhai, Berkeley PhD -- Thesis Committee
+    \item Liwei Jiang, UW PhD -- Thesis Committee
+    \item Junran Yang, UW PhD -- General Exam Committee
+    \item Marcus Memmel, UW PhD -- General Exam Committee
+    \item Artin Tajdini, UW PhD -- General Exam Committee
+\end{itemize}
+
+\iffalse
+%Grants and Fellowships (if you are in a field where these differ categorically from Awards and Honors). Give funder, institutional location in which received/utilized, year span. Listing $$ amount appears to be field-specific.  Check with a trusted senior advisor. Year at left.
+MIT Machine Learning Across Disciplines Challenge
+
+\fi
+
+\NewPart{Service to Profession}{}
+\textbf{Research Community Leadership}
+\begin{itemize}
+    \item \CommitteeEntry{Cooperative AI Foundation}{2024-present}{Advisor}{https://www.cooperativeai.com/foundation\#Staff}
+    \item \CommitteeEntry{International Conference on Learning Representations (ICLR)}{2025}{Best Paper Committee}{https://blog.iclr.cc/2025/04/22/announcing-the-outstanding-paper-awards-at-iclr-2025/}
+    \item \CommitteeEntry{Berkeley Multi-agent Reinforcement Learning Seminar}{2020-2023}{Creator/Organizer}{https://sites.google.com/corp/view/berkeleymarl/home}
+    \item \CommitteeEntry{NeurIPS Cooperative AI workshop}{2021}{Organizer, Area Chair}{https://www.cooperativeai.com/neurips-2021/workshop-information}
+    \item \CommitteeEntry{NeurIPS Cooperative AI workshop}{2020}{Panelist, Q\&A Moderator}{https://www.cooperativeai.com/neurips-2020/speakers}
+    \item \CommitteeEntry{ICLR Climate Change for Artificial Intelligence (CCAI) workshop}{2019}{Organizer}{https://www.climatechange.ai/events/iclr2020.html}
+    \item \CommitteeEntry{NeurIPS Emergent Communication (EmeComm) workshop}{2019}{Organizer}{https://sites.google.com/corp/view/emecom2019/home}
+    \item \CommitteeEntry{ICML Artificial Intelligence in Affective Computing (AffComp) workshop}{2018}{Organizer}{https://icml.cc/Conferences/2018/Schedule?showEvent=3304}
+\end{itemize}
+
+\noindent \textbf{University Service}
+\begin{itemize}
+    \item UW Admitted PhD Student Visit day (Speaker) (2026)
+    \item UW CSE Alumni event (Speaker) (2025)
+    \item \href{https://www.ece.uw.edu/news-events/wafer/}{UW WomXn at the Forefront of Engineering Research (WAFER)} (Speaker) (2025)
+    \item Undergraduate Scholarships Committee (2025)
+    \item UW Admitted Undergraduate Student Visit day (Speaker) (2025)
+    \item UW Admitted PhD Student Visit day (Speaker) (2025)
+    \item UW Provost's AI Education Town Hall (Lead/Moderator) (2024)
+    \item UW Undergraduate Faculty Cohort Program (Mentor) (2024)
+    \item Introduction to Python camp at UW Summer Stretch (Speaker) (2024)
+    \item University of Washington \href{https://www.washington.edu/research/or/advisory-boards/early-career-research-advisory-group/}{Early Career Research Advisory Board} (Advisor)  (2024)
+    \item UW Allen School Freshman Direct-Admit Seminar (Guest Speaker) (2024)
+\end{itemize}
+
+\noindent \textbf{Reviewing and Program Committees}
+\begin{itemize}
+    \item \CommitteeEntry{Neural Information Processing Systems (NeurIPS)}{2019-2026}{Area Chair (2022-2026), Reviewer (Top ranked)}{}
+    \item \CommitteeEntry{International Conference on Machine Learning (ICML)}{2019-2021, 2025}{Area Chair (2025), Reviewer}{}
+    \item \CommitteeEntry{International Conference on Learning Representations (ICLR)}{2021, 2022}{Reviewer}{}
+    \item \CommitteeEntry{Affective Computing and Intelligent Interaction (ACII)}{2021}{Reviewer}{}
+    \item \CommitteeEntry{NeurIPS Cooperative AI workshop}{2020}{Program Committee}{}
+    \item \CommitteeEntry{NeurIPS Offline RL workshop}{2020}{Program Committee}{}
+    \item \CommitteeEntry{Women in Machine Learning (WIML) at NeurIPS}{2019}{Reviewer}{}
+    \item \CommitteeEntry{Association for the Advancement of Artificial Intelligence (AAAI)}{2019, 2020}{Reviewer}{}
+    \item \CommitteeEntry{Imitation, Intent, and Interaction Workshop (IIIW) at ICML}{2019}{Program Committee}{}
+    \item \CommitteeEntry{Transactions on Affective Computing (TAFFC)}{2019}{Reviewer}{}
+    \item \CommitteeEntry{Transactions on Audio, Speech, and Language Processing (TASL)}{2019}{Reviewer}{}
+    \item \CommitteeEntry{Workshop on Machine Learning for Healthcare (ML4HC) at NeurIPS}{2018}{Program Committee}{}
+    \item \CommitteeEntry{Workshop on Artificial Intelligence in Affective Computing (AffComp) at IJCAI}{2018}{Program Committee}{}
+    \item \CommitteeEntry{Transactions on Computer-Human Interaction (ToCHI)}{2017}{Reviewer}{}
+    \item \CommitteeEntry{Transactions on Knowledge and Data Engineering (TKDE)}{2017}{Reviewer}{}
+    \item \CommitteeEntry{Workshop on Machine Learning for Healthcare (ML4HC) at NeurIPS}{2016, 2017}{Program Committee}{}
+    \item \CommitteeEntry{Computer Human Interaction (CHI)}{2015, 2016}{Reviewer}{}
+
+\end{itemize}
+
+\noindent \textbf{Grant Reviewing}
+\begin{itemize}
+    \item NSF RI Small CV/ML Panel (2025): reviewer and panelist %P252682 
+    \item NSF HCI Small Panel (2025): reviewer and panelist %P252697 
+    \item NSF RI (2024): reviewer and panelist
+    \item Cooperative AI General Research Grants (2024): reviewer and panelist
+    \item NSF HCC Human-AI and Human-Vehicle Interactions (2024): reviewer and panelist
+\end{itemize}
+
+\NewPart{Community Service and outreach}{}
+
+% \noindent \textbf{Professor of Physics} \hfill      % Study
+% 		\colorbox{White}{%
+% 			\parbox{6em}{%
+% 			\hfill\color{Black}2016-$\qquad$}} \par
+
+% \EducationEntry{{Ph.D. Candidate}}{2014-$\qquad$}{University of Maryland, College Park}{
+% }
+
+
+\ServiceEntry{Women in Machine Learning (WIML) workshop}{2020-2025}{}
+{I am a mentor for Women in ML (WIML), where I host a roundtable sessions in which I answer questions and provide guidance about research and career topics.}
+\sepspace
+
+\ServiceEntry{UW Women in Computing Careers Series}{Winter 2024}{Seattle, USA}
+{The goal of this program is to give connect female and non-binary identifying students with women leaders and experts in the field of computer science.}
+\sepspace
+
+\ServiceEntry{Cooperative AI workshop Mentorship Program}{Summer 2021}{Virtual}
+{I planned and implemented the \href{https://www.cooperativeai.com/neurips-2021/workshop-information#h.ssihuuiopnhu}{NeurIPS 2021 Cooperative AI workshop mentorship program}, which pairs junior researchers from underrepresented groups with a senior researcher who can provide feedback on their submission.}
+\sepspace
+
+
+\ServiceEntry{Google Computer Science Research Mentorship Program}{Spring 2021}{Virtual}
+{I supported computer science graduate students from under-represented groups through a twelve week program in which I counseled them on research, and provided career and networking advice.}
+\sepspace
+
+
+\ServiceEntry{Climate Change AI (CCAI) workshop}{Spring 2021}{Virtual}
+{I served as a Research Mentor as part of the Climate Change AI (CCAI) ICML workshop program. I provided feedback, advice, and research discussions to a mentee interested in submitting to the workshop}
+\sepspace
+
+\ServiceEntry{Saskatchewan Startup Incubator Cultivator}{2021}{Virtual}
+{Cultivator is a startup incubator based in the province of Saskatchewan. I volunteered to help support local startups by consulting with CEOs of companies using AI and machine learning.}
+\sepspace
+
+\ServiceEntry{OpenAI Scholars Program}{2018, 2020}{San Francisco, USA}
+{The Scholars program is an initiative to encourage individuals from underrepresented groups to study deep learning. Mentors provide guidance to participants in gaining a technical understanding of deep learning and advise on their projects.}
+\sepspace
+
+\ServiceEntry{NeurIPS Black in AI Mentorship}{2020}{Virtual}
+{I participated in Black in AI as a mentor, hosting roundtable sessions in which I answered questions and provided guidance about finding a job in industry and choosing between industry and academia.}
+\sepspace
+
+\ServiceEntry{Richard Tapia Diversity in Computing Conference}{ 2020}{Virtual}
+{I participated in the conference as a mentor, and hosted a roundtable session with students, answering questions and providing career guidance}
+\sepspace
+
+\ServiceEntry{NeurIPS Climate Change AI Workshop}{2020}{Virtual}
+{The goal of the CCAI mentorship program is to pair individuals with machine learning research expertise with students working on climate-focused ML projects. I provided research advice related to reinforcement learning to students working on the problem of directing resources to stop wildfire spread.}
+\sepspace
+
+\ServiceEntry{Berkeley AI Research (BAIR) mentoring}{2020}{Berkeley, USA}
+{As a BAIR mentor, I helped support undergraduates from traditionally underrepresented groups to embark on a career in machine learning research.}
+\sepspace
+
+\ServiceEntry{Climate Change AI (CCAI)}{2020}{Virtual}
+{As one of the committee members of CCAI (\url{https://www.climatechange.ai/}), I helped catalyze the use of machine learning technology for mitigating and adapting to climate change through building a community of diverse stakeholders and connecting them to resources such as information and funding.}
+\sepspace
+
+\ServiceEntry{Media Lab Carbon Offsets}{2019}{Cambridge, USA}
+{Together with two other students, I petitioned for funding to create a program to offset the carbon emissions of research-related flights for the Media Lab: \url{https://offset.media.mit.edu/}}
+\sepspace
+
+\ServiceEntry{Students Offering Support}{2015, 2017}{Cambridge, USA}
+{SOS aims to assist under-represented students applying to the Media Lab. I helped participants with their application portfolio and statement.}
+\sepspace
+
+\ServiceEntry{Cradles to Crayons}{2015}{Boston, USA}
+{I helped to sort and package donations of clothing, toys, and books for children in low-income families.}
+\sepspace
+
+\ServiceEntry{UBC Thunderbots}{2013-2014}{Vancouver, Canada}
+{Thunderbots is a project to build competitive, soccer playing robots. I contributed by working on the AI driving the robots' plays and tactics}
+\sepspace
+
+\ServiceEntry{Girlsmarts}{2012-2014}{Vancouver, Canada}
+{Planned and organized workshops aimed at increasing interest in Computer Science among elementary-school-aged girls. Helped teach programming and robotics activities.}
+\sepspace
+
+\ServiceEntry{UBC CS Graduate Student Assocation - Vice President, Social }{2013}{Vancouver, Canada}
+{I organized social events for the graduate Computer Science students at UBC.}
+\sepspace
+
+\ServiceEntry{U. of R. CS Students' Society - Vice President}{2010-2012}{Regina, Canada}
+{I participated in running the Computer Science students' society, including organizing fundraising events.}
+\sepspace
+
+\ServiceEntry{Mother Teresa Middle School Science Camp}{2011}{Regina, Canada}
+{I volunteered for an \textit{option gratuis} summer camp for economically and socially disadvantaged youth from the core of Regina. We built robots.}
+\sepspace
+
+\NewPart{Languages and Tools}{}
+Python, Tensorflow, Pytorch, Ruby, Django, Javascript, Matlab, C, C$++$, C\#, Scipy, Scikit-learn, Pandas AWS, Google App Engine, Theano, Weka, Angular, Git, SVN, PHP, VB, Octave, Prolog
+
+\NewPart{Open Source Projects}{}
+\OpenSourceEntry{Social RL}{https://github.com/google-research/google-research/tree/master/social\_rl}{The Social RL repo comprises three different repos. The first is a set of multi-agent training environments including navigation and sparse reward tasks. Second is code to train multiple independent agents using TF Agents and PPO. Finally, the third repo supports adversarial environment generation, which enables learning an RL policy to generate environments in order to challenge a second set of learning agents.}
+\sepspace
+
+\OpenSourceEntry{EDA Explorer}{http://eda-explorer.media.mit.edu/}{An open source web application which allows anyone to upload Electrodermal Activity (EDA) data, visualize it, and analyze it using built-in machine learning algorithms. The site currently has hundreds of users, hosts thousands of EDA files, and has accelerated a number of research projects.}
+\sepspace
+
+\OpenSourceEntry{Sequence Tutor}{https://github.com/tensorflow/magenta/tree/master/magenta/models/rl_tuner}{Code for training an RNN sequence model first on data, and then with a reinforcement learning loss function combining temporal difference learning with extrinsic reward, while penalizing KL-divergence from the policy of the pre-trained model.}
+\sepspace
+
+\OpenSourceEntry{Personalized Multi-task Learning}{https://github.com/mitmedialab/PersonalizedMultitaskLearning}{Code for three types of multi-task learning (MTL) models personalized to individual human data. Models include: i) a non-parametric hierarchical Bayesian model, ii) a MTL deep neural network, iii) Multi-task Multiple Kernel Learning, and all relevant baselines.}
+
+
+
+\end{document}
