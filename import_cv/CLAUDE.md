@@ -33,3 +33,14 @@ string alone (it may abbreviate to initials) and don't guess.
   report) is not a preprint-in-submission — it will never move to a
   peer-reviewed venue. File it under the year heading it was published in,
   not under Preprints.
+
+## Publication ordering on publications.html
+
+- Most recent goes first. Within a given year heading, group by venue and
+  order the venue groups by conference date within that year — e.g. ICLR
+  (spring) before ICML (summer) before NeurIPS (winter).
+- Within the Preprints section, follow the order the papers appear in in
+  `cv.tex`, rather than deriving an order some other way.
+- When adding a newly-confirmed paper to an existing list, insert it near
+  the top of its section/venue group rather than appending it at the
+  bottom — newer additions should generally read as more recent.
